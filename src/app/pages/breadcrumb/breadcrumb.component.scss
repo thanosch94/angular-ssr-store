@@ -1,0 +1,95 @@
+// Customize these variables as needed
+$breadcrumb-bg: transparent;
+$breadcrumb-color: #374151; // text
+$breadcrumb-link-color: #2563eb;
+$breadcrumb-link-hover: darken($breadcrumb-link-color, 10%);
+$separator-color: #9ca3af;
+$font-size: 0.9rem;
+$max-width: 100%;
+
+.breadcrumb {
+  background: $breadcrumb-bg;
+  padding: 0.25rem 0;
+  font-size: $font-size;
+  color: $breadcrumb-color;
+
+  &__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    max-width: $max-width;
+    flex-wrap: nowrap;
+
+    // allow horizontal scroll on very small screens if needed
+    overflow-x: auto;
+    -webkit-overflow-scrolling: touch;
+
+    // hide scrollbar visually but keep scroll functionality
+    &::-webkit-scrollbar { height: 6px; }
+  }
+
+  &__item {
+    display: inline-flex;
+    align-items: center;
+    white-space: nowrap;
+
+    // ensure separators don't wrap on their own
+    &:not(:last-child) {
+      margin-right: 0;
+    }
+  }
+
+  &__link {
+    color: $breadcrumb-link-color;
+    text-decoration: none;
+    transition: color 0.12s ease;
+    display: inline-block;
+    max-width: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+    vertical-align: middle;
+
+    &:hover,
+    &:focus {
+      color: $breadcrumb-link-hover;
+      text-decoration: underline;
+      outline: none;
+    }
+  }
+
+  &__separator {
+    margin: 0 0.5rem;
+    color: $separator-color;
+    font-size: 0.9em;
+    user-select: none;
+  }
+
+  &__current {
+    color: $breadcrumb-color;
+    font-weight: 600;
+    display: inline-block;
+    max-width: 18rem;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    white-space: nowrap;
+  }
+}
+
+/* Optional: RTL support */
+[dir="rtl"] .breadcrumb {
+  .breadcrumb__list { direction: rtl; }
+  .breadcrumb__separator { transform: rotate(180deg); }
+}
+
+/* Responsive tweak: allow last item to expand and show more space on wider viewports */
+@media (min-width: 768px) {
+  .breadcrumb {
+    &__link, &__current {
+      max-width: 36rem;
+    }
+  }
+}
