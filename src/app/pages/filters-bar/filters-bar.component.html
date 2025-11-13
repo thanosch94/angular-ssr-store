@@ -1,0 +1,36 @@
+<div class="filter-section">
+  <!-- Search -->
+  <!-- <input
+    type="text"
+    placeholder="Search products..."
+    [(ngModel)]="filters.searchText"
+    (input)="applyFilters()"
+    class="filter-input"
+  /> -->
+
+  <!-- Category Dropdown -->
+  <ejs-dropdownlist
+    [dataSource]="categories"
+    [(ngModel)]="filters.category"
+    placeholder="Select Category"
+    (change)="applyFilters()"
+  ></ejs-dropdownlist>
+
+  <!-- Price Range -->
+  <div class="price-range">
+    <ejs-numerictextbox
+      [(ngModel)]="filters.minPrice"
+      placeholder="Min"
+      (change)="applyFilters()"
+      format="c2"
+    ></ejs-numerictextbox>
+    <span>-</span>
+    <ejs-numerictextbox
+      [(ngModel)]="filters.maxPrice"
+      placeholder="Max"
+      (change)="applyFilters()"
+      format="c2"
+    ></ejs-numerictextbox>
+  </div>
+
+</div>

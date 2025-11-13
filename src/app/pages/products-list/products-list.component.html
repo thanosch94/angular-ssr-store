@@ -1,0 +1,14 @@
+<filters-bar></filters-bar>
+<div class="product-list">
+  @if(products.length === 0){
+    <div class="no-products">
+    <p>No products found.</p>
+  </div>
+}@else{
+  @for(product of products;track product.Id){
+<div class="product-item">
+    <product-item [product]="product" (click)="onProductClick(product)"></product-item>
+  </div>
+  }
+}
+</div>

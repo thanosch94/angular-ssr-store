@@ -1,73 +1,110 @@
+/* === HEADER === */
 .header {
+  position: fixed; /* make it stay at top */
+  top: 0;
+  left: 0;
+  right: 0;
+  z-index: 1000;
+  background: white;
   display: flex;
   justify-content: space-between;
   align-items: center;
   padding: 16px 32px;
   color: white;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+  height: 38px; /* fixed height */
+}
 
-  .logo a {
+.categories-logo {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+
+  .categories-btn {
+    background: none;
+    border: none;
+    font-size: 1rem;
+    cursor: pointer;
+    color: black;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+
+    &:hover {
+      color: #b82626;
+    }
+  }
+
+  a {
     font-size: 1.8rem;
     font-weight: bold;
     color: black;
     text-decoration: none;
   }
+}
 
-  .search-bar {
-    flex: 1/2;
-    display: flex;
-    margin: 0 24px;
+.search-bar {
+  flex: 1;
+  display: flex;
+  margin: 0 250px;
 
-    input {
-      flex: 1;
-      padding: 8px 12px;
-      border: 2px solid rgb(123, 122, 122)!important;
-
-      border-radius: 8px 0 0 8px;
-      border: none;
-      font-size: 1rem;
-    }
-
-    button {
-      padding: 8px 16px;
-      border: none;
-      border-radius: 0 8px 8px 0;
-      background-color: #b82626;
-      color: white;
-      font-weight: 500;
-      cursor: pointer;
-      transition: background 0.2s;
-
-      &:hover {
-        background-color: #8d1f1f;
-      }
-    }
+  input {
+    flex: 1;
+    padding: 8px 12px;
+    border: 2px solid rgb(123, 122, 122) !important;
+    border-radius: 8px 0 0 8px;
+    font-size: 1rem;
+    outline: none;
   }
 
-  .header-actions {
-    .favorites {
-      background-color: #b82626;
-      padding: 8px 16px;
-      border-radius: 8px;
-      text-decoration: none;
-      color: white;
-      font-weight: 500;
+  button {
+    padding: 8px 16px;
+    border: none;
+    border-radius: 0 8px 8px 0;
+    background-color: #b82626;
+    color: white;
+    font-weight: 500;
+    cursor: pointer;
+    transition: background 0.2s;
 
-      &:hover {
-        background-color: #8d1f1f;
-      }
+    &:hover {
+      background-color: #8d1f1f;
     }
   }
 }
 
-/* Responsive */
+.header-actions {
+  .favorites {
+    background-color: #b82626;
+    padding: 8px 16px;
+    border-radius: 8px;
+    text-decoration: none;
+    color: white;
+    font-weight: 500;
+
+    &:hover {
+      background-color: #8d1f1f;
+    }
+  }
+}
+
+
+
+/* === RESPONSIVE === */
 @media (max-width: 768px) {
   .header {
     flex-direction: column;
     align-items: stretch;
     gap: 12px;
+    height: auto;
+    position: static;
 
     .search-bar {
       margin: 0;
     }
+  }
+
+  .sidebar-container {
+    top: auto;
   }
 }

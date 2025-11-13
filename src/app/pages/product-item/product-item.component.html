@@ -1,0 +1,20 @@
+<div class="product-card">
+  <fa-icon
+    [icon]="product.IsFavorite ? solidHeart : regularHeart"
+    class="favorite-icon"
+    (click)="toggleFavorite($event)"
+  ></fa-icon>
+  <img [src]="product.ImageUrl" [alt]="product.Name" class="product-image" />
+
+  <div class="product-details">
+    <h2 class="product-title">{{ product.Name }}</h2>
+    <p class="product-description">{{ product.Description }}</p>
+
+    <div class="product-footer">
+      <span class="product-price">
+        {{ product.Price | currency : "EUR" : "symbol" : "1.2-2" }}
+      </span>
+      <button class="view-button" (click)="viewProduct()">Προβολή</button>
+    </div>
+  </div>
+</div>

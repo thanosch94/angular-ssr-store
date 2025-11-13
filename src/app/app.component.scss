@@ -1,0 +1,22 @@
+.sidebar-container {
+  position: fixed;
+  top: 70px; /* below header */
+  left: 0;
+  right: 0;
+  bottom: 0;
+}
+
+::ng-deep .e-sidebar {
+  top: 70px !important;
+
+}
+
+::ng-deep .e-sidebar-overlay {
+  top: 70px !important;
+
+}
+
+main {
+  margin-top: 90px; /* prevent header overlap */
+  display: block;
+}

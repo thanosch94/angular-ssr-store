@@ -1,2 +1,22 @@
-<app-header></app-header>
-<router-outlet />
+<app-header (toggleSidebar)="onToggleSidebar()"></app-header>
+
+<!-- Sidebar below header -->
+<ejs-sidebar
+  id="default-sidebar"
+  #sidebar
+  [width]="'300px'"
+   style="visibility: hidden"
+  [showBackdrop]="false"
+  [closeOnDocumentClick]="false"
+  [enableGestures]="true"
+  [enablePersistence]="true"
+  (created)="onCreated()"
+   >
+
+  <categories></categories>
+</ejs-sidebar>
+
+<!-- Main routed content -->
+<main>
+  <router-outlet></router-outlet>
+</main>

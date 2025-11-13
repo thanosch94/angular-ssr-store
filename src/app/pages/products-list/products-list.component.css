@@ -1,0 +1,28 @@
+.product-list {
+  display: flex;
+  flex-wrap: wrap;  /* allows items to move to new lines */
+  gap: 20px;        /* spacing between items */
+  justify-content: flex-start; /* items pack to the left, no extra space */
+}
+
+.product-item {
+  max-width: calc(50% - 20px);
+  box-sizing: border-box;
+  margin-bottom: 20px; /* vertical spacing between rows */
+}
+
+/* Medium screens (tablets) */
+@media (max-width: 768px) {
+  .product-item {
+    flex: 1 1 calc(50% - 20px); /* keep 2 items per row */
+    max-width: calc(50% - 20px);
+  }
+}
+
+/* Small screens (mobile) */
+@media (max-width: 480px) {
+  .product-item {
+    flex: 1 1 calc(50% - 10px); /* 2 items per row, smaller gap */
+    max-width: calc(50% - 10px);
+  }
+}

@@ -1,5 +1,8 @@
 <header class="header">
-  <div class="logo">
+  <div class="categories-logo">
+    <button class="categories-btn" (click)="onToggleSidebar()">
+      <fa-icon [icon]="faBars"></fa-icon> Κατηγορίες
+    </button>
     <a routerLink="/">All For Home</a>
   </div>
 
@@ -7,14 +10,19 @@
     <input
       type="text"
       placeholder="Αναζήτηση"
-      [(ngModel)]="searchQuery"
+      [(ngModel)]="searchInput"
       (keyup.enter)="onSearch()"
     />
-    <button (click)="onSearch()"><fa-icon [icon]="faSearch"></fa-icon>
-</button>
+    <button (click)="onSearch()">
+      <fa-icon [icon]="faSearch"></fa-icon>
+    </button>
   </div>
 
   <div class="header-actions">
-    <a routerLink="/favorites" class="favorites"><span><fa-icon [icon]="faHeart"></fa-icon>  Αγαπημένα (0)</span></a>
+    <a routerLink="/favorites" class="favorites">
+      <span>
+        <fa-icon [icon]="faHeart"></fa-icon> Αγαπημένα (0)
+      </span>
+    </a>
   </div>
 </header>
