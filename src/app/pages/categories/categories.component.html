@@ -1,6 +1,6 @@
 <div class="categories-container">
   <ul class="category-list">
-    @for(Cat of Categories;track Cat.Id){
+    @for(Cat of categories|async;track Cat.Id){
     <li class="category-item">
       <div class="category-header" (click)="ToggleExpand(Cat)">
         <!-- <fa-icon [icon]="Cat.Icon" class="category-icon"></fa-icon> -->

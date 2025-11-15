@@ -1,0 +1,28 @@
+.wrapper {
+  padding: 20px;
+}
+
+.row {
+  margin-top: 15px;
+}
+
+.mt-10 {
+  margin-top: 10px;
+}
+
+.submit-btn {
+  margin-top: 30px;
+}
+.import-btns{
+  display: flex;
+  justify-content: flex-end;
+  gap: 1rem;
+}
+.w-100{
+  width: 100%;
+}
+
+.add-btn{
+    display: flex;
+  justify-content: flex-end;
+}

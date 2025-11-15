@@ -4,7 +4,10 @@ export interface Product {
   Name: string;
   Description?: string;
   Price: number;
-  ImageUrl: string;
+  DiscountPrice?: number;
+  FeatureImageUrl: string;
+  Images: string[];
   CategoryId?: Guid;
   IsFavorite?: boolean;
+  AffiliateUrl?: string;
 }

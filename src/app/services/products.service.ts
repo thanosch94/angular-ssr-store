@@ -12,7 +12,7 @@ export class ProductsService {
       Name: 'Handmade Wool Sweater',
       Description: 'Warm and soft winter sweater made from 100% wool.',
       Price: 89.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/5/35154.jpg',
     },
     {
@@ -20,7 +20,7 @@ export class ProductsService {
       Name: 'Crochet Scarf',
       Description: 'Elegant handmade scarf perfect for chilly days.',
       Price: 39.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/3/330846.png',
     },
     {
@@ -28,7 +28,7 @@ export class ProductsService {
       Name: 'Knitted Beanie',
       Description: 'Cozy beanie made from natural fibers.',
       Price: 24.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/5/35160.jpg',
     },
     {
@@ -36,7 +36,7 @@ export class ProductsService {
       Name: 'Knitted Beanie',
       Description: 'Cozy beanie made from natural fibers.',
       Price: 24.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/5/35160.jpg',
     },
     {
@@ -44,7 +44,7 @@ export class ProductsService {
       Name: 'Handmade Wool Sweater',
       Description: 'Warm and soft winter sweater made from 100% wool.',
       Price: 89.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/5/35154.jpg',
     },
     {
@@ -52,7 +52,7 @@ export class ProductsService {
       Name: 'Crochet Scarf',
       Description: 'Elegant handmade scarf perfect for chilly days.',
       Price: 39.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/3/330846.png',
     },
     {
@@ -60,7 +60,7 @@ export class ProductsService {
       Name: 'Handmade Wool Sweater',
       Description: 'Warm and soft winter sweater made from 100% wool.',
       Price: 89.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/5/35154.jpg',
     },
     {
@@ -68,7 +68,7 @@ export class ProductsService {
       Name: 'Crochet Scarf',
       Description: 'Elegant handmade scarf perfect for chilly days.',
       Price: 39.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/3/330846.png',
     },
     {
@@ -76,7 +76,7 @@ export class ProductsService {
       Name: 'Knitted Beanie',
       Description: 'Cozy beanie made from natural fibers.',
       Price: 24.99,
-      ImageUrl:
+      FeatureImageUrl:
         'https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/3/5/35160.jpg',
     },
   ];

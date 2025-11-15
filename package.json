@@ -27,6 +27,7 @@
     "@syncfusion/ej2": "^31.2.5",
     "@syncfusion/ej2-angular-buttons": "^31.2.3",
     "@syncfusion/ej2-angular-dropdowns": "^31.2.5",
+    "@syncfusion/ej2-angular-grids": "^31.2.10",
     "@syncfusion/ej2-angular-inputs": "^31.2.5",
     "@syncfusion/ej2-angular-navigations": "^31.2.5",
     "@syncfusion/ej2-base": "^31.2.5",

@@ -1,0 +1,59 @@
+<div class="wrapper">
+  <div class="add-btn">
+  <button ejs-button cssClass="e-primary" (click)="addImport()">
+    Προσθήκη
+  </button>
+  </div>
+
+  <br />
+  <ejs-accordion class="inports-accordion">
+    <e-accordionitems>
+      @for(item of data|async;track item.Id; let i = $index){
+      <e-accordionitem [expanded]="i == 0 ? true : false">
+        <ng-template #header>
+          <div>{{ item.FolderToSave }}{{ item.Name }}
+          </div>
+        </ng-template>
+        <ng-template #content>
+          <div class="import-btns">
+
+          <button
+            ejs-button
+            cssClass="e-info mt-10"
+            (click)="onSave(item)"
+          >
+           {{item.Id ==null?"Αποθήκευση":"Ενημέρωση"}}
+
+          </button>
+          <button
+            ejs-button
+            cssClass="e-danger mt-10"
+            (click)="onRemove(item)"
+          >
+            {{item.Id ==null?"Ακύρωση":"Αφαίρεση"}}
+          </button>
+          </div>
+          <div class="row">
+            <ejs-textbox placeholder="Folder" floatLabelType="Auto" >
+            </ejs-textbox>
+          </div>
+
+          <div class="row">
+            <ejs-textbox placeholder="File Name" floatLabelType="Auto">
+            </ejs-textbox>
+          </div>
+
+          <div class="row">
+            <ejs-textbox placeholder="Web URL" floatLabelType="Auto">
+            </ejs-textbox>
+          </div>
+        </ng-template>
+      </e-accordionitem>
+      }
+    </e-accordionitems>
+  </ejs-accordion>
+
+  <button ejs-button cssClass="e-success submit-btn" (click)="submit()">
+    Submit
+  </button>
+</div>

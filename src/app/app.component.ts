@@ -1,4 +1,5 @@
-import { Component, ViewChild } from '@angular/core';
+import { Component, ViewChild } from '@angular/core';import { TextBoxModule, TextAreaModule, NumericTextBoxModule, MaskedTextBoxModule, SliderModule, UploaderModule, ColorPickerModule, SignatureModule, RatingModule, OtpInputModule, SmartTextAreaModule, SpeechToTextModule } from '@syncfusion/ej2-angular-inputs';
+
 import { RouterOutlet } from '@angular/router';
 import { HeaderComponent } from './pages/header/header.component';
 import {
@@ -9,7 +10,7 @@ import { CategoriesComponent } from './pages/categories/categories.component';
 
 @Component({
   selector: 'app-root',
-  imports: [
+  imports: [TextBoxModule, TextAreaModule, NumericTextBoxModule, MaskedTextBoxModule, SliderModule, UploaderModule, ColorPickerModule, SignatureModule, RatingModule, OtpInputModule, SmartTextAreaModule, SpeechToTextModule, 
     HeaderComponent,
     RouterOutlet,
     SidebarAllModule,

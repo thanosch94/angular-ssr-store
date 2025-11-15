@@ -1,0 +1,34 @@
+<ejs-grid
+  [dataSource]="products | async"
+  [allowPaging]="true"
+  [allowSorting]="true"
+  [allowFiltering]="true"
+  [allowGrouping]="true"
+  [pageSettings]="pageSettings"
+  (commandClick)="onCommandClick($event)"
+>
+  <e-columns>
+    @for(col of columns;track col.Field){
+    <e-column
+      [field]="col.Field"
+      [headerText]="col.HeaderText"
+      [width]="col.Width"
+      [commands]="col.Commands"
+    >
+      <ng-template #template let-data>
+        @if(col.Field==='FeatureImageUrl'){
+        <img
+          [src]="data.FeatureImageUrl"
+          style="
+            height: 60px;
+            width: 60px;
+            object-fit: cover;
+            border-radius: 8px;
+          "
+        />
+        }@else{ {{ data[col.Field] }}}
+      </ng-template>
+    </e-column>
+    }
+  </e-columns>
+</ejs-grid>
