@@ -1,59 +1,113 @@
-<div class="wrapper">
+<form [formGroup]="form" class="wrapper">
   <div class="add-btn">
-  <button ejs-button cssClass="e-primary" (click)="addImport()">
-    Προσθήκη
-  </button>
+    <button
+      ejs-button
+      cssClass="e-small e-round e-primary"
+      type="button"
+      (click)="addImport()"
+    >
+      <span class="e-icons e-plus"></span>
+    </button>
   </div>
-
   <br />
-  <ejs-accordion class="inports-accordion">
-    <e-accordionitems>
-      @for(item of data|async;track item.Id; let i = $index){
-      <e-accordionitem [expanded]="i == 0 ? true : false">
-        <ng-template #header>
-          <div>{{ item.FolderToSave }}{{ item.Name }}
-          </div>
-        </ng-template>
-        <ng-template #content>
-          <div class="import-btns">
 
-          <button
-            ejs-button
-            cssClass="e-info mt-10"
-            (click)="onSave(item)"
-          >
-           {{item.Id ==null?"Αποθήκευση":"Ενημέρωση"}}
-
-          </button>
-          <button
-            ejs-button
-            cssClass="e-danger mt-10"
-            (click)="onRemove(item)"
-          >
-            {{item.Id ==null?"Ακύρωση":"Αφαίρεση"}}
-          </button>
+  <div class="flex" formArrayName="importSettings">
+    @for(group of importSettings.controls;track group; let i = $index){
+    <div class="row card-layout w-30" [formGroupName]="i">
+      <div class="col-xs-6 col-sm-6 col-lg-6 col-md-6">
+        <div tabindex="0" class="e-card" id="basic_card">
+          <div class="e-card-header flex">
+            <div class="e-card-header-caption">
+              <div class="e-card-header-title">Spitishop Import</div>
+              <div class="e-card-sub-title">By John Doe | Jan 20, 2018</div>
+            </div>
+            <div>
+              <div class="import-btns">
+                @if(group.get('Id')?.value){<button
+                  ejs-button
+                  cssClass="e-small e-round e-success"
+                  type="button"
+                  (click)="onExecuteClick(group.value)"
+                >
+                  <span class="e-icons e-play"></span>
+                </button>
+              }
+                <button
+                  ejs-button
+                  cssClass="e-small e-round e-info"
+                  type="button"
+                  (click)="onSave(group)"
+                >
+                  <span class="e-icons e-save"></span>
+                </button>
+                <button
+                  ejs-button
+                  cssClass="e-small e-round e-danger"
+                  type="button"
+                  (click)="onRemove(group)"
+                >
+                  @if(group.get("Id")?.value == null){
+                  <span class="e-icons e-close"></span>
+                  }@else{
+                  <span class="e-icons e-trash"></span>
+                  }
+                </button>
+              </div>
+            </div>
           </div>
-          <div class="row">
-            <ejs-textbox placeholder="Folder" floatLabelType="Auto" >
-            </ejs-textbox>
-          </div>
+          <div class="e-card-content">
+            <div class="row">
+              <ejs-textbox
+                formControlName="Title"
+                placeholder="Import Title"
+                floatLabelType="Auto"
+              ></ejs-textbox>
+            </div>
 
-          <div class="row">
-            <ejs-textbox placeholder="File Name" floatLabelType="Auto">
-            </ejs-textbox>
-          </div>
+            <div class="row">
+              <ejs-dropdownlist
+                [dataSource]="importTypes"
+                [fields]="{ text: 'Name', value: 'Id' }"
+                formControlName="ImportType"
+                placeholder="Import Type"
+                floatLabelType="Auto"
+              ></ejs-dropdownlist>
+            </div>
+            <div class="row">
+              <ejs-textbox
+                formControlName="GetUrl"
+                placeholder="Web URL"
+                floatLabelType="Auto"
+              ></ejs-textbox>
+            </div>
 
-          <div class="row">
-            <ejs-textbox placeholder="Web URL" floatLabelType="Auto">
-            </ejs-textbox>
-          </div>
-        </ng-template>
-      </e-accordionitem>
-      }
-    </e-accordionitems>
-  </ejs-accordion>
+            <div class="row">
+              <ejs-textbox
+                formControlName="Name"
+                placeholder="File Name"
+                floatLabelType="Auto"
+              ></ejs-textbox>
+            </div>
 
-  <button ejs-button cssClass="e-success submit-btn" (click)="submit()">
-    Submit
-  </button>
-</div>
+            <div class="row">
+              <ejs-textbox
+                formControlName="DbMatchProperty"
+                placeholder="Database Match Property"
+                floatLabelType="Auto"
+              ></ejs-textbox>
+            </div>
+            <div class="row">
+              <ejs-textbox
+                formControlName="FileMatchProperty"
+                placeholder="File Match Property"
+                floatLabelType="Auto"
+              ></ejs-textbox>
+            </div>
+          </div>
+          <div class="e-card-actions"></div>
+        </div>
+      </div>
+    </div>
+    }
+  </div>
+</form>

@@ -30,6 +30,7 @@ export class HeaderComponent implements OnInit {
   }
 
   onSearch() {
+    debugger
     this.router.navigate([
       '/products-list'],
       {

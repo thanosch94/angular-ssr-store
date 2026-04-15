@@ -5,7 +5,9 @@
 .row {
   margin-top: 15px;
 }
-
+.w-45{
+  width: 45%;
+}
 .mt-10 {
   margin-top: 10px;
 }
@@ -21,8 +23,17 @@
 .w-100{
   width: 100%;
 }
+.w-30{
+  width: 30%;
+}
 
+.flex{
+  display: flex;
+  gap: 3%;
+}
 .add-btn{
     display: flex;
   justify-content: flex-end;
 }
+
+

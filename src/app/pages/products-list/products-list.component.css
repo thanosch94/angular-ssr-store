@@ -11,6 +11,11 @@
   margin-bottom: 20px; /* vertical spacing between rows */
 }
 
+.paginator-container{
+  display: flex;
+  justify-content: center;
+}
+
 /* Medium screens (tablets) */
 @media (max-width: 768px) {
   .product-item {
@@ -26,3 +31,4 @@
     max-width: calc(50% - 10px);
   }
 }
+

@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Output } from '@angular/core';
+import { Category } from './../../interfaces/category';
+import { Component, EventEmitter, output, Output } from '@angular/core';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { faChevronDown, faChevronUp } from '@fortawesome/free-solid-svg-icons';
-import { Category } from '../../interfaces/category';
 import { CategoriesService } from '../../services/categories.service';
 import { AsyncPipe } from '@angular/common';
 import { Observable, of } from 'rxjs';
+import { Guid } from 'guid-typescript';
 
 @Component({
   selector: 'categories',
@@ -13,6 +14,7 @@ import { Observable, of } from 'rxjs';
   styleUrls: ['./categories.component.css']
 })
 export class CategoriesComponent {
+  categorySelected = output<Category>()
   @Output() CategorySelected = new EventEmitter<string>();
 
   faChevronDown = faChevronDown;
@@ -33,7 +35,7 @@ export class CategoriesComponent {
     category.Expanded = !category.Expanded;
   }
 
-  SelectCategory(categoryName: string) {
-    this.CategorySelected.emit(categoryName);
+  SelectCategory(category: Category) {
+    this.categorySelected.emit(category);
   }
 }

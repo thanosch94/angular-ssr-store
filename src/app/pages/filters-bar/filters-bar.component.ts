@@ -18,7 +18,7 @@ import { Product } from '../../interfaces/product';
 })
 export class FiltersBarComponent implements OnInit {
   constructor() {}
-categories = ['All', 'Scarf', 'Beanie', 'Hat', 'Sweater'];
+  categories = ['All', 'Scarf', 'Beanie', 'Hat', 'Sweater'];
   products = [
     /* your product list */
   ];
@@ -30,7 +30,7 @@ categories = ['All', 'Scarf', 'Beanie', 'Hat', 'Sweater'];
     category: 'All',
     minPrice: null as number | null,
     maxPrice: null as number | null,
-    favoritesOnly: false
+    favoritesOnly: false,
   };
 
   ngOnInit() {
@@ -38,21 +38,19 @@ categories = ['All', 'Scarf', 'Beanie', 'Hat', 'Sweater'];
   }
 
   applyFilters() {
-    this.filteredProducts = this.products.filter((p:Product) => {
-      const matchesSearch = p.Name
-        .toLowerCase()
-        .includes(this.filters.searchText.toLowerCase());
+    this.filteredProducts = this.products.filter((p: Product) => {
+      const matchesSearch = p.Name.toLowerCase().includes(
+        this.filters.searchText.toLowerCase()
+      );
 
-      const matchesCategory =
-        this.filters.category === 'All'
+      const matchesCategory = this.filters.category === 'All';
       const matchesMinPrice =
         this.filters.minPrice === null || p.Price >= this.filters.minPrice;
 
       const matchesMaxPrice =
         this.filters.maxPrice === null || p.Price <= this.filters.maxPrice;
 
-      const matchesFavorites =
-        !this.filters.favoritesOnly || p.IsFavorite;
+      const matchesFavorites = !this.filters.favoritesOnly || p.IsFavorite;
 
       return (
         matchesSearch &&
@@ -63,5 +61,4 @@ categories = ['All', 'Scarf', 'Beanie', 'Hat', 'Sweater'];
       );
     });
   }
-
 }

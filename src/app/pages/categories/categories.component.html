@@ -14,7 +14,7 @@
       @if(Cat.Expanded){
       <ul class="subcategory-list">
         @for(Sub of Cat.Subcategories;track Sub.Id){
-        <li (click)="SelectCategory(Sub.Name)" class="subcategory-item">
+        <li (click)="SelectCategory(Sub)" class="subcategory-item">
           {{ Sub.Name }}
         </li>
         }

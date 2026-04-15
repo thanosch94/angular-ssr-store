@@ -22,7 +22,9 @@
       [(ngModel)]="filters.minPrice"
       placeholder="Min"
       (change)="applyFilters()"
+      [min]="0"
       format="c2"
+      currency="EUR"
     ></ejs-numerictextbox>
     <span>-</span>
     <ejs-numerictextbox

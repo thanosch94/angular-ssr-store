@@ -2,6 +2,8 @@ import { Guid } from "guid-typescript";
 export interface Product {
   Id: Guid;
   Name: string;
+  Sku:string;
+  AffiliateId?:string;
   Description?: string;
   Price: number;
   DiscountPrice?: number;

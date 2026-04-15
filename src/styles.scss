@@ -1,6 +1,7 @@
 @import '../node_modules/@syncfusion/ej2-material-theme/styles/material.css';
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/@syncfusion/ej2-material-theme/styles/offline-theme/material.css';
+@import "../node_modules/@syncfusion/ej2-icons/styles/material.css";
 
 //General
 .flex{
@@ -9,10 +10,10 @@
 
 //Single Product Page
 .product-page-container {
-  display: flex;
-  gap: 40px;
+  display: grid;
+  grid-template-columns: 1fr 1fr;
   background: white;
-  padding: 40px;
+  padding: 0 1rem 1rem 1rem;
   border-radius: 16px;
   box-shadow: 0 4px 15px rgba(0,0,0,0.1);
   margin: 0 auto;
@@ -36,8 +37,16 @@
 
 .product-page__feature-image img {
   width: 100%;
+  height: 100%;
   border-radius: 12px;
-  object-fit: cover;
+  object-fit: contain;
+  background: #f0f0f0;
+  cursor: zoom-in; /* magnifier cursor on hover */
+  transition: opacity 0.2s;
+}
+
+.product-page__feature-image img:hover {
+  opacity: 0.9; /* subtle hover effect */
 }
 
 .product-page__details-container {
@@ -56,12 +65,15 @@
   color: #555;
   line-height: 1.6;
   margin-bottom: 20px;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
 }
 
 .product-page__price {
   font-size: 1.5rem;
   font-weight: bold;
-  color: #2ecc71;
   margin-bottom: 20px;
 }
 

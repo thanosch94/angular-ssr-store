@@ -1,0 +1,27 @@
+.pagination {
+  display: flex;
+  gap: 4px;
+}
+
+button {
+  border: 1px solid #ccc;
+  background: white;
+  padding: 4px 8px;
+  cursor: pointer;
+
+  &:hover {
+      background-color: #8d1f1f;
+      color:white
+  }
+}
+
+button.active {
+  background: #b82626;
+  color: white;
+  border-color: #b82626;
+}
+
+button:disabled {
+  opacity: 0.5;
+  cursor: default;
+}

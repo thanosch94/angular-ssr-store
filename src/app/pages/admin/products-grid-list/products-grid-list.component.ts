@@ -41,8 +41,8 @@ export class ProductsGridListComponent implements OnInit {
     this.getData();
     // Example columns
     this.columns = [
-      { Field: 'Id', HeaderText: 'Id', Width: 50 },
-      { Field: 'FeatureImageUrl', HeaderText: 'Image', Width: 150 },
+      { Field: 'AffiliateId', HeaderText: 'Id', Width: 80 },
+      { Field: 'FeatureImageUrl', HeaderText: 'Image', Width: 70 },
 
       { Field: 'Name', HeaderText: 'Name', Width: 150 },
       {

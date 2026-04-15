@@ -98,7 +98,10 @@
             ],
             "styles": [
               "src/styles.scss",
-              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css"
+              "./node_modules/@syncfusion/ej2-material-theme/styles/material.css",
+              "./node_modules/@syncfusion/ej2-base/styles/material.css",
+              "./node_modules/@syncfusion/ej2-buttons/styles/material.css",
+              "./node_modules/@syncfusion/ej2-icons/styles/material.css"
             ],
             "scripts": []
           }

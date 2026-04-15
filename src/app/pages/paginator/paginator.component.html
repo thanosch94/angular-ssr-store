@@ -1,0 +1,25 @@
+<div class="pagination">
+  <button (click)="goToPage(1)" [disabled]="activePageNumber() === 1">
+    «
+  </button>
+
+  <button (click)="goToPage(activePageNumber() - 1)" [disabled]="activePageNumber() === 1">
+    ‹
+  </button>
+
+  @for(page of pages;track page){
+    <button
+          (click)="goToPage(page)"
+          [class.active]="page === activePageNumber()">
+    {{ page }}
+  </button>
+}
+
+  <button (click)="goToPage(activePageNumber() + 1)" [disabled]="activePageNumber === totalPages">
+    ›
+  </button>
+
+  <button (click)="goToPage(totalPages())" [disabled]="activePageNumber === totalPages">
+    »
+  </button>
+</div>

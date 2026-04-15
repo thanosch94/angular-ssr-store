@@ -1,33 +1,119 @@
 <div class="product-page__breadcrumb">
-<breadcrumb></breadcrumb>
-
+  <breadcrumb></breadcrumb>
 </div>
 
 <div class="product-page-container">
   <div class="product-page__feature-image">
+    <div class="product-page__image-thumbnails">
+      <img
+        *ngFor="let img of product.Images"
+        [src]="img"
+        alt="Thumbnail"
+        class="thumbnail"
+        [class.selected]="selectedImage === img"
+        (click)="selectedImage = img"
+      />
+    </div>
     <img
-      src="https://www.homesweethome.gr/media/catalog/product/cache/e0ec88829fb05fc7e7c9c60de78d84d8/5/4/54900-b2b_big_1.jpg"
+      class="product-page__feature-image_zoomable"
+      [src]="selectedImage"
       alt="Product Image"
+      (click)="openImageDialog()"
     />
   </div>
 
   <div class="product-page__details-container">
-    <h1 class="product-page__title">
-      Bizzotto Clarity Βοηθητικά Τραπέζια Μεταλλικά Κεραμιδί/Πράσινα Σετ 2 Τμχ
-      36x36x61
-    </h1>
-    <h4>Κωδικός: 0747430</h4>
+    <h2 class="product-page__title">
+      {{ product.Name }}
+    </h2>
+    <b class="product-page__sku">Κωδικός: {{ product.Sku }}</b>
     <p class="product-page__short-descr">
-      Το σετ Clarity περιλαμβάνει δύο βοηθητικά τραπέζια διαφορετικού χρώματος —
-      ένα σε κεραμιδί (terracotta) και ένα σε πράσινο sage — δημιουργώντας έναν
-      διακριτικό αλλά εντυπωσιακό συνδυασμό που προσθέτει χαρακτήρα σε κάθε
-      σαλόνι ή καθιστικό χώρο...
+      {{ product.Description }}
     </p>
 
-    <div class="product-page__price">$49.99</div>
+    @let hasDiscount =
+      product.DiscountPrice && product.DiscountPrice < product.Price;
+    <div class="product-page__price-section">
+      <span
+        [ngClass]="
+          hasDiscount
+            ? 'product-page__price--original product-page__price--strikethrough'
+            : 'product-page__price'
+        "
+      >
+        {{ product.Price | currency: "EUR" : "symbol" : "1.2-2" }}
+      </span>
+      @if (hasDiscount) {
+        <span class="product-page__price--discount">
+          {{ product.DiscountPrice | currency: "EUR" : "symbol" : "1.2-2" }}
+        </span>
+        <span class="product-page__discount-badge">
+          -{{
+            ((product.Price - product.DiscountPrice!) / product.Price) * 100
+              | number: "1.0-0"
+          }}%
+        </span>
+      }
+    </div>
 
     <div>
-      <button class="product-page__go-to-eshop">Αγόρασε το</button>
+      <a
+        [href]="product.AffiliateUrl"
+        class="product-page__go-to-eshop"
+        target="_blank"
+        (click)="onBuyClick($event)"
+        >Αγόρασε το</a
+      >
+    </div>
+  </div>
+
+  <!-- Tabs Section -->
+  <div class="product-page__tabs">
+    <div class="tabs-header">
+      <button
+        class="tab-button"
+        [class.active]="activeTab === 'description'"
+        (click)="setActiveTab('description')"
+      >
+        Περιγραφή
+      </button>
+      <button
+        class="tab-button"
+        [class.active]="activeTab === 'characteristics'"
+        (click)="setActiveTab('characteristics')"
+      >
+        Χαρακτηριστικά
+      </button>
+    </div>
+    <div class="tabs-content">
+      <div *ngIf="activeTab === 'description'" class="tab-pane">
+        <p>{{ product.Description }}</p>
+      </div>
+      <div *ngIf="activeTab === 'characteristics'" class="tab-pane">
+        <!-- Empty for now -->
+      </div>
     </div>
   </div>
 </div>
+
+<!-- Image Dialog -->
+<ejs-dialog
+  #imageDialog
+  [visible]="false"
+  [width]="'60%'"
+  [height]="'100%'"
+  [showCloseIcon]="true"
+  [isModal]="true"
+  (overlayClick)="imageDialog.hide()"
+  header="Εικόνα προϊόντος"
+>
+  <ng-template #content>
+    <div class="center">
+      <img
+        [src]="selectedImage"
+        alt="Full Size Product Image"
+        style="max-width: 100%; max-height: 80vh; object-fit: contain"
+      />
+    </div>
+  </ng-template>
+</ejs-dialog>

@@ -5,7 +5,7 @@ import { ProductsGridListComponent } from './pages/admin/products-grid-list/prod
 import { ImportsComponent } from './pages/admin/imports/imports.component';
 
 export const routes: Routes = [
-    { path: 'product/:sku', component: SingleProductPageComponent },
+    { path: 'product/:id', component: SingleProductPageComponent },
     { path: 'products-list', component: ProductsListComponent },
     { path: 'admin', component: ProductsGridListComponent },
     { path: 'imports', component: ImportsComponent },

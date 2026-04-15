@@ -1,7 +1,7 @@
 import { Guid } from "guid-typescript";
 
 export interface Category {
-  Id: number;
+  Id: Guid;
   Name: string;
   Icon?: string;
   ParentCategoryId?: Guid;

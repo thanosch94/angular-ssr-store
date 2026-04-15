@@ -12,3 +12,11 @@
   }
 }
 </div>
+<div class="paginator-container">
+ <paginator
+  [totalPages]="totalPages"
+  [displayPages]="5"
+  [activePageNumber]="listOptions.PageNumber??1"
+  (pageChanged)="onPageChange($event)"></paginator>
+
+</div>
