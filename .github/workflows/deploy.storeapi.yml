@@ -26,6 +26,20 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
+      - name: Copy production environment file
+        shell: powershell
+        run: |
+          $source = "C:\conf\AllforHome\environment.ts"
+          $targetFolder = "src\app\env"
+          $target = "$targetFolder\environment.ts"
+
+          if (!(Test-Path $source)) {
+            throw "Production environment file not found at $source"
+          }
+
+          New-Item -ItemType Directory -Force -Path $targetFolder
+          Copy-Item $source $target -Force
+
       - name: Build Angular SSR
         run: npm run build -- --configuration production
 
