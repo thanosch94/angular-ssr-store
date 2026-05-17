@@ -13,7 +13,7 @@ jobs:
       APP_NAME: "All for Home"
       DEPLOY_PATH: "C:\\inetpub\\wwwroot\\AllForHome"
       PM2_APP_NAME: "all-for-home-ssr"
-
+      PM2_PATH: "C:\\Users\\Administrator\\AppData\\Roaming\\npm\\pm2.cmd"
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -46,7 +46,7 @@ jobs:
       - name: Stop existing PM2 process
         shell: powershell
         run: |
-          pm2 stop $env:PM2_APP_NAME
+          & $env:PM2_PATH stop $env:PM2_APP_NAME
           if ($LASTEXITCODE -ne 0) {
             Write-Host "PM2 process was not running."
           }
@@ -95,10 +95,10 @@ jobs:
         shell: powershell
         working-directory: ${{ env.DEPLOY_PATH }}
         run: |
-          pm2 delete $env:PM2_APP_NAME
+          & $env:PM2_PATH delete $env:PM2_APP_NAME
           if ($LASTEXITCODE -ne 0) {
             Write-Host "PM2 process was not registered."
           }
 
-          pm2 start ecosystem.config.js
-          pm2 save
+          & $env:PM2_PATH start ecosystem.config.js
+          & $env:PM2_PATH save
