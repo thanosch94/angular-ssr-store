@@ -10,7 +10,7 @@ jobs:
     runs-on: self-hosted
 
     env:
-      APP_NAME: "All for Home"
+      APP_NAME: "angular-ssr-store"
       DEPLOY_PATH: "C:\\inetpub\\wwwroot\\AllForHome"
       PM2_APP_NAME: "all-for-home-ssr"
       PM2_PATH: "C:\\Users\\Administrator\\AppData\\Roaming\\npm\\pm2.cmd"
