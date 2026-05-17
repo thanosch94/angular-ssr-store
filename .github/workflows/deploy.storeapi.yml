@@ -14,6 +14,8 @@ jobs:
       DEPLOY_PATH: "C:\\inetpub\\wwwroot\\AllForHome"
       PM2_APP_NAME: "all-for-home-ssr"
       PM2_PATH: "C:\\Users\\Administrator\\AppData\\Roaming\\npm\\pm2.cmd"
+      PORT: "4000"
+
     steps:
       - name: Checkout repository
         uses: actions/checkout@v4
@@ -21,7 +23,17 @@ jobs:
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
-          node-version: 24
+          node-version: 20
+
+      - name: Check PM2 path
+        shell: powershell
+        run: |
+          if (!(Test-Path $env:PM2_PATH)) {
+            throw "PM2 was not found at $env:PM2_PATH"
+          }
+
+          Write-Host "PM2 found at: $env:PM2_PATH"
+          & $env:PM2_PATH -v
 
       - name: Install dependencies
         run: npm ci
@@ -40,16 +52,31 @@ jobs:
           New-Item -ItemType Directory -Force -Path $targetFolder
           Copy-Item $source $target -Force
 
+          Write-Host "Environment file copied to $target"
+
       - name: Build Angular SSR
         run: npm run build -- --configuration production
 
-      - name: Stop existing PM2 process
+      - name: Verify build output
         shell: powershell
         run: |
-          & $env:PM2_PATH stop $env:PM2_APP_NAME
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "PM2 process was not running."
+          $buildPath = "dist\$env:APP_NAME"
+
+          if (!(Test-Path $buildPath)) {
+            Write-Host "Dist folder contents:"
+            Get-ChildItem "dist" -Recurse | Select-Object FullName
+            throw "Build output not found at $buildPath"
           }
+
+          if (!(Test-Path "$buildPath\server")) {
+            throw "SSR server folder not found at $buildPath\server"
+          }
+
+          if (!(Test-Path "$buildPath\browser")) {
+            throw "Browser folder not found at $buildPath\browser"
+          }
+
+          Write-Host "Build output verified at $buildPath"
 
       - name: Prepare deploy folder
         shell: powershell
@@ -58,14 +85,20 @@ jobs:
             New-Item -ItemType Directory -Path $env:DEPLOY_PATH -Force
           }
 
-          Remove-Item "$env:DEPLOY_PATH\*" -Recurse -Force
+          Get-ChildItem $env:DEPLOY_PATH -Force | Remove-Item -Recurse -Force
+
+          Write-Host "Deploy folder prepared: $env:DEPLOY_PATH"
 
       - name: Copy build output
         shell: powershell
         run: |
-          Copy-Item "dist\$env:APP_NAME\*" $env:DEPLOY_PATH -Recurse -Force
+          $buildPath = "dist\$env:APP_NAME"
+
+          Copy-Item "$buildPath\*" $env:DEPLOY_PATH -Recurse -Force
           Copy-Item "package.json" $env:DEPLOY_PATH -Force
           Copy-Item "package-lock.json" $env:DEPLOY_PATH -Force
+
+          Write-Host "Build files copied to $env:DEPLOY_PATH"
 
       - name: Create PM2 ecosystem file
         shell: powershell
@@ -86,6 +119,8 @@ jobs:
           };
           "@ | Out-File -FilePath "ecosystem.config.js" -Encoding UTF8
 
+          Write-Host "PM2 ecosystem file created."
+
       - name: Install production dependencies
         shell: powershell
         working-directory: ${{ env.DEPLOY_PATH }}
@@ -95,10 +130,31 @@ jobs:
         shell: powershell
         working-directory: ${{ env.DEPLOY_PATH }}
         run: |
-          & $env:PM2_PATH delete $env:PM2_APP_NAME
-          if ($LASTEXITCODE -ne 0) {
-            Write-Host "PM2 process was not registered."
+          & $env:PM2_PATH describe $env:PM2_APP_NAME
+
+          if ($LASTEXITCODE -eq 0) {
+            Write-Host "Deleting existing PM2 process..."
+            & $env:PM2_PATH delete $env:PM2_APP_NAME
+
+            if ($LASTEXITCODE -ne 0) {
+              throw "Failed to delete existing PM2 process."
+            }
+          } else {
+            Write-Host "PM2 process was not registered yet."
           }
 
+          Write-Host "Starting Angular SSR with PM2..."
           & $env:PM2_PATH start ecosystem.config.js
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "Failed to start Angular SSR with PM2."
+          }
+
+          Write-Host "Saving PM2 process list..."
           & $env:PM2_PATH save
+
+          if ($LASTEXITCODE -ne 0) {
+            throw "Failed to save PM2 process list."
+          }
+
+          Write-Host "Angular SSR restarted successfully."
