@@ -1,0 +1,31 @@
+<div class="admin-layout" [class.admin-layout--collapsed]="isCollapsed">
+  <aside class="admin-sidenav" aria-label="Admin navigation">
+    <div class="admin-brand">
+      <span class="brand-mark"></span>
+      <span class="brand-text">AffiliatePro</span>
+    </div>
+
+    <nav class="admin-nav">
+      <ng-container *ngFor="let group of navGroups">
+        <span class="nav-section">{{ group.title }}</span>
+        <a
+          *ngFor="let item of group.items"
+          [routerLink]="item.route"
+          routerLinkActive="active"
+          [routerLinkActiveOptions]="{ exact: item.exact ?? false }">
+          <span class="e-icons nav-icon" [ngClass]="item.iconClass"></span>
+          <span>{{ item.label }}</span>
+        </a>
+      </ng-container>
+    </nav>
+
+    <button class="collapse-button" type="button" (click)="toggleSidenav()">
+      <span class="e-icons e-chevron-left collapse-icon"></span>
+      <span>Σύμπτυξη μενού</span>
+    </button>
+  </aside>
+
+  <main class="admin-content">
+    <router-outlet></router-outlet>
+  </main>
+</div>

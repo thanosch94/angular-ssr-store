@@ -5,6 +5,10 @@ import { ProductsService } from '../../services/products.service';
 import { Product } from '../../interfaces/product';
 import { DialogModule, DialogComponent } from '@syncfusion/ej2-angular-popups';
 import { CommonModule, CurrencyPipe } from '@angular/common';
+import { Meta, Title } from '@angular/platform-browser';
+import { BaseComponent } from '../base/base.component';
+import { MetaData } from '@syncfusion/ej2-angular-inputs';
+import { Metadata } from '../../interfaces/metadata';
 
 @Component({
   selector: 'app-single-product-page',
@@ -12,7 +16,7 @@ import { CommonModule, CurrencyPipe } from '@angular/common';
   templateUrl: './single-product-page.component.html',
   styleUrls: ['./single-product-page.component.scss']
 })
-export class SingleProductPageComponent implements OnInit {
+export class SingleProductPageComponent extends BaseComponent implements OnInit {
   id: any;
   product:Product = {} as Product;
   activeTab: string = 'description';
@@ -20,22 +24,32 @@ export class SingleProductPageComponent implements OnInit {
 
   @ViewChild('imageDialog') imageDialog?: DialogComponent;
 
-  constructor(private route: ActivatedRoute,
-        private productsService: ProductsService
-
+  constructor(private route: ActivatedRoute
   ) {
+    super();
     this.id = this.route.snapshot.paramMap.get('id') ?? '';
-    this.productsService.GetById(this.id).subscribe((data: Product) => {
-      this.product=data;
+
+  }
+
+  ngOnInit() {
+      this.product=this.route.snapshot.data['product'];;
       this.selectedImage = this.product.FeatureImageUrl;
       this.product.Images = []
       this.product.Images.push(this.product.FeatureImageUrl); // Ensure feature image is included in the gallery
       this.product.Images.push("https://b.scdn.gr/images/sku_main_images/021870/21870438/fixedratio_20250918175501_camper_peu_cami_andrika_anatomika_sneakers_mayra_k100249_012.jpeg"); // Ensure feature image is included in the gallery
-    });
-  }
 
-  ngOnInit() {
-  }
+      const metaData:Metadata = {
+        Title: this.product.Name + ' | All for Home',
+        Description: this.product.Description,
+        Price: this.product.Price,
+        DiscountPrice: this.product.DiscountPrice,
+        Image: this.product.FeatureImageUrl
+      }
+
+      this.setMetaData(metaData)
+    }
+
+
 
   openImageDialog() {
     if (this.imageDialog) {

@@ -1,0 +1,23 @@
+:host {
+  display: block;
+  min-height: 100vh;
+}
+
+::ng-deep .e-sidebar {
+  top: 76px !important;
+}
+
+::ng-deep .e-sidebar-overlay {
+  top: 76px !important;
+}
+
+.storefront-content {
+  display: block;
+  margin-top: 76px;
+}
+
+@media (max-width: 640px) {
+  .storefront-content {
+    margin-top: 0;
+  }
+}

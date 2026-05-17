@@ -12,7 +12,7 @@ constructor() { }
   getHeaders() {
     this.headers = {
       // Authorization: `Bearer ${this.token}`,
-      'Content-Type': 'application/json',
+      'Content-Type': 'application/json'
     };
     return this.headers;
   }

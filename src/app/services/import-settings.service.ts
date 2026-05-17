@@ -15,7 +15,6 @@ export class ImportSettingsService {
   }
 
   public GetAll() {
-    debugger
     return this.http.get<ImportSetting[]>(this.service + 'ImportsSettings/getall', {
       headers: this.auth.getHeaders(),
     });

@@ -1,0 +1,132 @@
+<section class="analytics-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Ρυθμίσεις Analytics</h2>
+      <p>Διαχειριστείτε τις προτιμήσεις ανάλυσης, τα metrics και τις αναφορές.</p>
+    </div>
+    <button ejs-button cssClass="e-primary save-button" type="button">
+      <span class="e-icons e-save"></span>
+      Αποθήκευση Αλλαγών
+    </button>
+  </header>
+
+  <div class="analytics-content">
+    <section class="settings-card general-card">
+      <div class="section-title">
+        <h3>Γενικές Ρυθμίσεις Analytics</h3>
+        <span class="e-icons e-circle-info"></span>
+      </div>
+      <div class="general-grid">
+        <div class="form-grid two-columns">
+          <label class="field">
+            <span class="field-label">Προεπιλεγμένο Εύρος Ημερομηνιών</span>
+            <ejs-dropdownlist [dataSource]="dateRangeOptions" [fields]="fields" [(ngModel)]="dateRange"></ejs-dropdownlist>
+          </label>
+          <label class="field">
+            <span class="field-label">Ζώνη Ώρας για Analytics</span>
+            <ejs-dropdownlist [dataSource]="timezoneOptions" [fields]="fields" [(ngModel)]="timezone"></ejs-dropdownlist>
+          </label>
+          <label class="field">
+            <span class="field-label">Σύγκριση με</span>
+            <ejs-dropdownlist [dataSource]="compareOptions" [fields]="fields" [(ngModel)]="compareRange"></ejs-dropdownlist>
+          </label>
+          <label class="field">
+            <span class="field-label">Νόμισμα</span>
+            <ejs-dropdownlist [dataSource]="currencyOptions" [fields]="fields" [(ngModel)]="currency"></ejs-dropdownlist>
+          </label>
+        </div>
+
+        <div class="setting-switches">
+          <label class="switch-row">
+            <span><strong>Αυτόματη ενημέρωση δεδομένων</strong><small>Τα δεδομένα ενημερώνονται αυτόματα</small></span>
+            <ejs-switch [(ngModel)]="autoRefresh"></ejs-switch>
+          </label>
+          <label class="switch-row">
+            <span><strong>Πραγματικός χρόνος (Real-time)</strong><small>Εμφάνιση δεδομένων σε πραγματικό χρόνο</small></span>
+            <ejs-switch [(ngModel)]="realTime"></ejs-switch>
+          </label>
+          <label class="switch-row">
+            <span><strong>Απόκρυψη μηδενικών τιμών</strong><small>Μη εμφάνιση metrics με μηδενικές τιμές</small></span>
+            <ejs-switch [(ngModel)]="hideZeroValues"></ejs-switch>
+          </label>
+        </div>
+      </div>
+    </section>
+
+    <section class="settings-card metrics-card">
+      <div class="section-title">
+        <div>
+          <h3>Επιλογή Μετρικών (Metrics)</h3>
+          <p>Επιλέξτε ποια metrics θέλετε να εμφανίζονται στο dashboard και στις αναφορές.</p>
+        </div>
+        <button ejs-button type="button" cssClass="e-outline" (click)="resetDefaults()">
+          <span class="e-icons e-refresh"></span>
+          Επαναφορά προεπιλογών
+        </button>
+      </div>
+
+      <div class="metrics-grid">
+        <label class="metric-row" *ngFor="let metric of metrics">
+          <span class="metric-icon e-icons" [ngClass]="metric.iconClass"></span>
+          <strong>{{ metric.label }}</strong>
+          <ejs-switch [(ngModel)]="metric.enabled"></ejs-switch>
+        </label>
+      </div>
+    </section>
+
+    <div class="bottom-grid">
+      <section class="settings-card">
+        <h3>Ομαδοποίηση &amp; Διάσταση</h3>
+        <label class="field">
+          <span class="field-label">Προεπιλεγμένη Ομαδοποίηση</span>
+          <ejs-dropdownlist [dataSource]="groupingOptions" [fields]="fields" [(ngModel)]="primaryGrouping"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span class="field-label">Δευτερεύουσα Ομαδοποίηση</span>
+          <ejs-dropdownlist [dataSource]="secondaryGroupingOptions" [fields]="fields" [(ngModel)]="secondaryGrouping"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span class="field-label">Μέγιστος αριθμός σειρών σε πίνακες</span>
+          <ejs-numerictextbox [(ngModel)]="maxRows" [format]="'n0'" [min]="10" [max]="500" [step]="10" [showSpinButton]="true"></ejs-numerictextbox>
+        </label>
+      </section>
+
+      <section class="settings-card">
+        <h3>Αποθήκευση Δεδομένων</h3>
+        <label class="field">
+          <span class="field-label">Διατήρηση αναλυτικών δεδομένων για</span>
+          <ejs-dropdownlist [dataSource]="retentionOptions" [fields]="fields" [(ngModel)]="retention"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span class="field-label">Συχνότητα συγκέντρωσης δεδομένων</span>
+          <ejs-dropdownlist [dataSource]="aggregationOptions" [fields]="fields" [(ngModel)]="aggregation"></ejs-dropdownlist>
+        </label>
+        <aside class="inline-note">
+          <span class="e-icons e-circle-info"></span>
+          Περισσότερη διατήρηση αυξάνει τον απαιτούμενο χώρο αποθήκευσης.
+        </aside>
+      </section>
+
+      <section class="settings-card">
+        <h3>Εξαγωγές &amp; Αναφορές</h3>
+        <label class="field">
+          <span class="field-label">Προεπιλεγμένη μορφή εξαγωγής</span>
+          <ejs-dropdownlist [dataSource]="exportFormatOptions" [fields]="fields" [(ngModel)]="exportFormat"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span class="field-label">Όριο γραμμών σε εξαγωγές</span>
+          <ejs-numerictextbox [(ngModel)]="exportLimit" [format]="'n0'" [min]="100" [max]="100000" [step]="100"></ejs-numerictextbox>
+        </label>
+        <label class="switch-row">
+          <span><strong>Συμπερίληψη γραφημάτων στην εξαγωγή</strong><small>Προσθήκη γραφημάτων στα PDF reports</small></span>
+          <ejs-switch [(ngModel)]="includeCharts"></ejs-switch>
+        </label>
+      </section>
+    </div>
+
+    <aside class="info-note">
+      <span class="e-icons e-circle-info"></span>
+      Οι αλλαγές στις ρυθμίσεις Analytics θα εφαρμοστούν σε όλο το σύστημα.
+    </aside>
+  </div>
+</section>

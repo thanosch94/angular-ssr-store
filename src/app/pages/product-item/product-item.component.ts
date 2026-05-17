@@ -5,6 +5,7 @@ import { Router, RouterModule } from '@angular/router';
 import { faHeart as solidHeart } from '@fortawesome/free-solid-svg-icons';
 import { faHeart as regularHeart } from '@fortawesome/free-regular-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
+import { BaseComponent } from '../base/base.component';
 
 @Component({
   selector: 'product-item',
@@ -12,11 +13,13 @@ import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
   imports: [CurrencyPipe, RouterModule, FontAwesomeModule, NgClass],
   styleUrls: ['./product-item.component.css']
 })
-export class ProductItemComponent implements OnInit {
+export class ProductItemComponent extends BaseComponent  {
   @Input() product!: Product;
   solidHeart = solidHeart;
   regularHeart = regularHeart;
-  constructor(private router: Router) {}
+  constructor(private router: Router  ) {
+    super();
+  }
 
   viewProduct() {
     // this.router.navigate(['/products', this.product.Id]);
@@ -25,6 +28,7 @@ export class ProductItemComponent implements OnInit {
   }
 
   ngOnInit() {
+
   }
 
   toggleFavorite(event: Event) {

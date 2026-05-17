@@ -1,22 +1,147 @@
-<filters-bar></filters-bar>
-<div class="product-list">
-  @if(products.length === 0){
-    <div class="no-products">
-    <p>No products found.</p>
-  </div>
-}@else{
-  @for(product of products;track product.Id){
-<div class="product-item">
-    <product-item [product]="product" (click)="onProductClick(product)"></product-item>
-  </div>
-  }
-}
-</div>
-<div class="paginator-container">
- <paginator
-  [totalPages]="totalPages"
-  [displayPages]="5"
-  [activePageNumber]="listOptions.PageNumber??1"
-  (pageChanged)="onPageChange($event)"></paginator>
+<section class="products-page">
+  <main class="products-shell">
+    <aside class="filters-panel" aria-label="Φίλτρα προϊόντων">
+      <div class="panel-title">
+        <div>
+          <h2>Φίλτρα</h2>
+          <p>{{ getActiveFilterCount() }} ενεργά</p>
+        </div>
+        <button ejs-button type="button" cssClass="e-flat clear-button" (click)="clearFilters()">Καθαρισμός</button>
+      </div>
 
-</div>
+      <div class="filter-group">
+        <label>Κατηγορία</label>
+        <ejs-dropdownlist
+          [dataSource]="categories"
+          [fields]="categoryFields"
+          [ngModel]="selectedCategoryId"
+          (ngModelChange)="selectedCategoryId = $event; onFilterChange()">
+        </ejs-dropdownlist>
+      </div>
+
+      <div class="filter-group">
+        <label>Εύρος τιμής</label>
+        <div class="price-inputs">
+          <ejs-numerictextbox
+            placeholder="Από"
+            format="c2"
+            currency="EUR"
+            [min]="0"
+            [ngModel]="minPrice"
+            (ngModelChange)="minPrice = $event">
+          </ejs-numerictextbox>
+          <ejs-numerictextbox
+            placeholder="Έως"
+            format="c2"
+            currency="EUR"
+            [min]="0"
+            [ngModel]="maxPrice"
+            (ngModelChange)="maxPrice = $event">
+          </ejs-numerictextbox>
+        </div>
+        <button ejs-button type="button" cssClass="e-outline apply-price-button" (click)="onFilterChange()">Εφαρμογή</button>
+      </div>
+
+      <label class="switch-row">
+        <span>
+          <strong>Μόνο αγαπημένα</strong>
+          <small>Προβολή προϊόντων που έχεις κρατήσει</small>
+        </span>
+        <ejs-switch [ngModel]="favoritesOnly" (ngModelChange)="toggleFavoritesOnly()"></ejs-switch>
+      </label>
+    </aside>
+
+    <section class="results-area">
+      <div class="results-toolbar">
+        <div>
+          <span class="breadcrumb">Προϊόντα / {{ getSelectedCategoryName() }}</span>
+          <h1>{{ displayedProducts.length }} προϊόντα</h1>
+        </div>
+
+        <div class="toolbar-actions">
+          <ejs-dropdownlist
+            class="sort-control"
+            [dataSource]="sortOptions"
+            [fields]="sortFields"
+            [ngModel]="selectedSort"
+            (ngModelChange)="setSort($event)">
+          </ejs-dropdownlist>
+          <div class="view-switch" aria-label="Τρόπος προβολής">
+            <button ejs-button type="button" [cssClass]="viewMode === 'grid' ? 'e-primary' : 'e-outline'" (click)="viewMode = 'grid'">Grid</button>
+            <button ejs-button type="button" [cssClass]="viewMode === 'comfortable' ? 'e-primary' : 'e-outline'" (click)="viewMode = 'comfortable'">Άνετα</button>
+          </div>
+        </div>
+      </div>
+
+      @if(isLoading) {
+        <div class="products-grid">
+          @for(item of [1, 2, 3, 4, 5, 6, 7, 8]; track item) {
+            <article class="product-card skeleton"></article>
+          }
+        </div>
+      } @else if(displayedProducts.length === 0) {
+        <div class="empty-state">
+          <strong>Δεν βρέθηκαν προϊόντα</strong>
+          <p>Δοκίμασε να αφαιρέσεις φίλτρα ή να αλλάξεις αναζήτηση από το header.</p>
+          <button ejs-button type="button" cssClass="e-primary" (click)="clearFilters()">Καθαρισμός φίλτρων</button>
+        </div>
+      } @else {
+        <div class="products-grid" [class.comfortable]="viewMode === 'comfortable'">
+          @for(product of displayedProducts; track product.Id) {
+            @let discount = getDiscountPercent(product);
+            <article class="product-card" (click)="viewProduct(product)">
+              <button
+                type="button"
+                class="favorite-button"
+                [class.active]="product.IsFavorite"
+                (click)="toggleFavorite(product, $event)"
+                aria-label="Προσθήκη στα αγαπημένα">
+                {{ product.IsFavorite ? '♥' : '♡' }}
+              </button>
+
+              @if(discount > 0) {
+                <span class="discount-badge">-{{ discount }}%</span>
+              }
+
+              <div class="image-frame">
+                <img [src]="product.FeatureImageUrl" [alt]="product.Name" loading="lazy" />
+              </div>
+
+              <div class="card-body">
+                <h2>{{ product.Name }}</h2>
+                                <span class="sku">Κωδικός: {{ product.Sku }}</span>
+
+                @if(product.Description) {
+                <p>{{ truncate(product.Description, 100) }}</p>
+                }
+              </div>
+
+              <footer class="card-footer">
+                <div class="price-block">
+                  @if(product.DiscountPrice && product.DiscountPrice < product.Price) {
+                    <span class="old-price">{{ product.Price | currency: "EUR" : "symbol" : "1.2-2" }}</span>
+                    <strong>{{ product.DiscountPrice | currency: "EUR" : "symbol" : "1.2-2" }}</strong>
+                  } @else {
+                    <strong>{{ product.Price | currency: "EUR" : "symbol" : "1.2-2" }}</strong>
+                  }
+                </div>
+                <button ejs-button type="button" cssClass="e-primary view-button" (click)="$event.stopPropagation(); viewProduct(product)">
+                  Προβολή
+                </button>
+              </footer>
+            </article>
+          }
+        </div>
+      }
+
+      <div class="paginator-container" *ngIf="totalPages > 1">
+        <paginator
+          [totalPages]="totalPages"
+          [displayPages]="displayPages"
+          [activePageNumber]="listOptions.PageNumber ?? 1"
+          (pageChanged)="onPageChange($event)"
+        />
+      </div>
+    </section>
+  </main>
+</section>

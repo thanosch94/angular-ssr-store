@@ -1,0 +1,22 @@
+<section *ngIf="isVisible" class="cookie-consent" aria-label="Ενημέρωση cookies">
+  <div class="cookie-consent__content">
+    <span class="cookie-consent__icon e-icons e-lock"></span>
+
+    <div class="cookie-consent__text">
+      <h2>Χρήση cookies</h2>
+      <p>
+        Χρησιμοποιούμε απαραίτητα cookies για τη λειτουργία της σελίδας και, με τη συγκατάθεσή σας,
+        επιπλέον cookies για βελτίωση εμπειρίας και αναλυτικά στοιχεία.
+      </p>
+    </div>
+  </div>
+
+  <div class="cookie-consent__actions">
+    <button ejs-button cssClass="e-outline cookie-consent__secondary" type="button" (click)="acceptNecessary()">
+      Μόνο απαραίτητα
+    </button>
+    <button ejs-button cssClass="e-primary cookie-consent__primary" type="button" (click)="acceptAll()">
+      Αποδοχή όλων
+    </button>
+  </div>
+</section>

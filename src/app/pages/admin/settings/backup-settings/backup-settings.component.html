@@ -1,0 +1,120 @@
+<section class="backup-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Επισκόπηση Backup</h2>
+    </div>
+    <button ejs-button cssClass="e-primary create-button" type="button">
+      <span class="e-icons e-upload-1"></span>
+      Δημιουργία Άμεσου Backup
+    </button>
+  </header>
+
+  <div class="backup-content">
+    <section class="summary-grid">
+      <article class="summary-card success">
+        <span class="summary-icon e-icons e-save"></span>
+        <div>
+          <small>Τελευταίο Backup</small>
+          <strong>15/05/2024 - 03:15</strong>
+        </div>
+        <b>Επιτυχές</b>
+      </article>
+      <article class="summary-card blue">
+        <span class="summary-icon e-icons e-layers"></span>
+        <div><small>Συνολικό Μέγεθος Backups</small><strong>12.45 GB</strong></div>
+      </article>
+      <article class="summary-card purple">
+        <span class="summary-icon e-icons e-file-document"></span>
+        <div><small>Αποθηκευμένα Backups</small><strong>18</strong></div>
+      </article>
+      <article class="summary-card amber">
+        <span class="summary-icon e-icons e-date-time"></span>
+        <div><small>Επόμενο Προγραμματισμένο</small><strong>16/05/2024 - 02:00</strong></div>
+      </article>
+    </section>
+
+    <section class="settings-card">
+      <h3>Ρυθμίσεις Αυτόματων Backup</h3>
+      <p class="card-helper">Ορίστε το πρόγραμμα και τις επιλογές για τα αυτόματα αντίγραφα ασφαλείας.</p>
+      <div class="form-grid three-columns">
+        <label class="field">
+          <span class="field-label">Συχνότητα Backup</span>
+          <ejs-dropdownlist [dataSource]="frequencyOptions" [fields]="fields" [(ngModel)]="backupFrequency"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span class="field-label">Ώρα Εκτέλεσης</span>
+          <ejs-dropdownlist [dataSource]="timeOptions" [fields]="fields" [(ngModel)]="executionTime"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span class="field-label">Διατήρηση Backup</span>
+          <ejs-dropdownlist [dataSource]="retentionOptions" [fields]="fields" [(ngModel)]="retention"></ejs-dropdownlist>
+        </label>
+      </div>
+      <div class="option-grid">
+        <label class="option-card">
+          <span class="option-icon e-icons e-layers"></span>
+          <span><strong>Backup Βάσης Δεδομένων</strong><small>Δημιουργία αντιγράφου της βάσης δεδομένων</small></span>
+          <ejs-switch [(ngModel)]="databaseBackup"></ejs-switch>
+        </label>
+        <label class="option-card">
+          <span class="option-icon e-icons e-file"></span>
+          <span><strong>Backup Αρχείων</strong><small>Δημιουργία αντιγράφου όλων των αρχείων</small></span>
+          <ejs-switch [(ngModel)]="fileBackup"></ejs-switch>
+        </label>
+        <label class="option-card">
+          <span class="option-icon e-icons e-file-document"></span>
+          <span><strong>Συμπίεση Backup</strong><small>Συμπίεση των backup αρχείων για εξοικονόμηση χώρου</small></span>
+          <ejs-switch [(ngModel)]="compression"></ejs-switch>
+        </label>
+        <label class="option-card">
+          <span class="option-icon e-icons e-upload-1"></span>
+          <span><strong>Αποθήκευση Off-site</strong><small>Αποθήκευση backup σε απομακρυσμένο server</small></span>
+          <ejs-switch [(ngModel)]="offsiteStorage"></ejs-switch>
+        </label>
+      </div>
+    </section>
+
+    <section class="settings-card table-card">
+      <h3>Λίστα Backup</h3>
+      <p class="card-helper">Διαχειριστείτε και κατεβάστε τα υπάρχοντα αντίγραφα ασφαλείας.</p>
+      <div class="backup-table">
+        <div class="table-head">
+          <span>Ημερομηνία &amp; Ώρα</span>
+          <span>Τύπος</span>
+          <span>Μέγεθος</span>
+          <span>Κατάσταση</span>
+          <span>Αποθήκευση</span>
+          <span>Ενέργειες</span>
+        </div>
+        <div class="table-row" *ngFor="let backup of backups">
+          <span><strong>{{ backup.date }}</strong><small>{{ backup.source }}</small></span>
+          <span><strong>{{ backup.type }}</strong><small>{{ backup.details }}</small></span>
+          <span>{{ backup.size }}</span>
+          <span><b class="status-pill">Επιτυχές</b></span>
+          <span>{{ backup.storage }}</span>
+          <span class="row-actions">
+            <button type="button" aria-label="Λήψη"><span class="e-icons e-download"></span></button>
+            <button type="button" aria-label="Ανέβασμα off-site" *ngIf="backup.offsite"><span class="e-icons e-upload-1"></span></button>
+            <button type="button" aria-label="Διαγραφή"><span class="e-icons e-trash"></span></button>
+          </span>
+        </div>
+      </div>
+      <button ejs-button type="button" cssClass="e-outline load-more">
+        Προβολή περισσότερων
+        <span class="e-icons e-arrow-down"></span>
+      </button>
+    </section>
+
+    <aside class="info-note">
+      <span class="e-icons e-circle-info"></span>
+      <div>
+        <strong>Σημαντικές πληροφορίες</strong>
+        <ul>
+          <li>Τα backup αποθηκεύονται τοπικά και απομακρυσμένα (αν είναι ενεργοποιημένο).</li>
+          <li>Συνιστάται να κατεβάζετε τα σημαντικά backup και να τα αποθηκεύετε σε ασφαλές μέρος.</li>
+          <li>Τα backup διατηρούνται για τον επιλεγμένο αριθμό ημερών και μετά διαγράφονται αυτόματα.</li>
+        </ul>
+      </div>
+    </aside>
+  </div>
+</section>

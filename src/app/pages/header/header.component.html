@@ -1,28 +1,45 @@
 <header class="header">
-  <div class="categories-logo">
-    <button class="categories-btn" (click)="onToggleSidebar()">
-      <fa-icon [icon]="faBars"></fa-icon> Κατηγορίες
-    </button>
-    <a routerLink="/">All For Home</a>
+  <div class="brand">
+    <a routerLink="/" class="brand-mark" aria-label="All For Home">
+      <fa-icon [icon]="faHouse"></fa-icon>
+      <span>
+        <strong>All For Home</strong>
+        <small>home finds made easy</small>
+      </span>
+    </a>
   </div>
 
-  <div class="search-bar">
-    <input
-      type="text"
-      placeholder="Αναζήτηση"
+  <div class="search-bar" role="search">
+    <ejs-textbox
+      cssClass="header-search-input"
+      placeholder="Αναζήτηση προϊόντων, κατηγοριών, καταστημάτων..."
       [(ngModel)]="searchInput"
-      (keyup.enter)="onSearch()"
-    />
-    <button (click)="onSearch()">
+      (keyup.enter)="onSearch()">
+    </ejs-textbox>
+    <button ejs-button type="button" cssClass="e-primary search-button" (click)="onSearch()" aria-label="Αναζήτηση">
       <fa-icon [icon]="faSearch"></fa-icon>
     </button>
   </div>
 
+  <nav class="main-nav" aria-label="Primary navigation">
+    <button type="button" (click)="onToggleSidebar()">Κατηγορίες</button>
+    <a routerLink="/products-list">Προϊόντα</a>
+    <a routerLink="/products-list">Προσφορές</a>
+    <a routerLink="/">Inspiration</a>
+  </nav>
+
   <div class="header-actions">
-    <a routerLink="/favorites" class="favorites">
-      <span>
-        <fa-icon [icon]="faHeart"></fa-icon> Αγαπημένα (0)
-      </span>
+    <a routerLink="/favorites" aria-label="Αγαπημένα">
+      <fa-icon [icon]="faHeart"></fa-icon>
+      <span>Αγαπημένα</span>
+    </a>
+    <a routerLink="/" aria-label="Προφίλ">
+      <fa-icon [icon]="faUser"></fa-icon>
+      <span>Προφίλ</span>
+    </a>
+    <a routerLink="/" aria-label="Καλάθι">
+      <fa-icon [icon]="faShoppingCart"></fa-icon>
+      <span>Καλάθι</span>
     </a>
   </div>
 </header>

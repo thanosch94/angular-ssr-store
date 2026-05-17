@@ -1,0 +1,159 @@
+<section class="appearance-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Ρυθμίσεις Εμφάνισης</h2>
+      <p>Προσαρμόστε την εμφάνιση του admin panel και των στοιχείων διεπαφής</p>
+    </div>
+    <button ejs-button cssClass="e-primary save-button" type="button">
+      <span class="e-icons e-save"></span>
+      Αποθήκευση Αλλαγών
+    </button>
+  </header>
+
+  <div class="appearance-grid">
+    <section class="settings-card theme-card">
+      <h3>Θέμα</h3>
+
+      <label class="field-label">Επιλογή Θέματος</label>
+      <div class="theme-options" role="group" aria-label="Επιλογή θέματος">
+        <button
+          *ngFor="let theme of themeOptions"
+          type="button"
+          class="theme-option"
+          [class.active]="selectedTheme === theme.key"
+          (click)="selectTheme(theme.key)">
+          <span class="theme-check" *ngIf="selectedTheme === theme.key"></span>
+          <span class="e-icons theme-icon" [ngClass]="theme.iconClass"></span>
+          <strong>{{ theme.label }}</strong>
+        </button>
+      </div>
+
+      <label class="field-label color-label">Χρώμα Έμφασης (Primary Color)</label>
+      <div class="color-swatches" role="group" aria-label="Χρώμα έμφασης">
+        <button
+          *ngFor="let color of primaryColors"
+          type="button"
+          class="color-swatch"
+          [class.active]="selectedPrimaryColor === color"
+          [style.background]="color"
+          (click)="selectPrimaryColor(color)">
+          <span class="e-icons e-check"></span>
+        </button>
+      </div>
+
+      <label class="field-label color-label">Χρώμα Sidebar</label>
+      <div class="radio-row">
+        <button type="button" class="radio-choice" [class.active]="selectedSidebarTone === 'dark'" (click)="selectSidebarTone('dark')">
+          <span></span>
+          Σκούρο
+        </button>
+        <button type="button" class="radio-choice" [class.active]="selectedSidebarTone === 'light'" (click)="selectSidebarTone('light')">
+          <span></span>
+          Ανοιχτό
+        </button>
+      </div>
+    </section>
+
+    <section class="settings-card layout-card">
+      <h3>Διάταξη</h3>
+      <label class="field">
+        <span>Πλάτος Sidebar</span>
+        <ejs-dropdownlist [dataSource]="sidebarWidthOptions" [fields]="fields" [(ngModel)]="sidebarWidth"></ejs-dropdownlist>
+      </label>
+      <label class="field">
+        <span>Συμπεριφορά Sidebar</span>
+        <ejs-dropdownlist [dataSource]="sidebarBehaviorOptions" [fields]="fields" [(ngModel)]="sidebarBehavior"></ejs-dropdownlist>
+      </label>
+      <label class="field">
+        <span>Πυκνότητα στοιχείων</span>
+        <ejs-dropdownlist [dataSource]="densityOptions" [fields]="fields" [(ngModel)]="elementDensity"></ejs-dropdownlist>
+      </label>
+      <label class="switch-row">
+        <span>
+          <strong>Συμπτυγμένο Sidebar από προεπιλογή</strong>
+          <small>Το sidebar θα ξεκινάει συμπτυγμένο</small>
+        </span>
+        <ejs-switch [(ngModel)]="collapsedSidebar"></ejs-switch>
+      </label>
+    </section>
+
+    <section class="settings-card font-card">
+      <h3>Γραμματοσειρά</h3>
+      <label class="field">
+        <span>Οικογένεια Γραμματοσειράς</span>
+        <ejs-dropdownlist [dataSource]="fontFamilyOptions" [fields]="fields" [(ngModel)]="fontFamily"></ejs-dropdownlist>
+      </label>
+      <div class="field">
+        <span>Μέγεθος Βασικής Γραμματοσειράς</span>
+        <div class="font-stepper">
+          <button ejs-button type="button" cssClass="e-flat" (click)="changeFontSize(-1)" aria-label="Μείωση μεγέθους">
+            <span class="e-icons e-minus"></span>
+          </button>
+          <strong>{{ baseFontSize }}px</strong>
+          <button ejs-button type="button" cssClass="e-flat" (click)="changeFontSize(1)" aria-label="Αύξηση μεγέθους">
+            <span class="e-icons e-plus"></span>
+          </button>
+        </div>
+      </div>
+      <label class="field">
+        <span>Ύψος Γραμμής</span>
+        <ejs-dropdownlist [dataSource]="lineHeightOptions" [fields]="fields" [(ngModel)]="lineHeight"></ejs-dropdownlist>
+      </label>
+    </section>
+
+    <section class="settings-card options-card">
+      <h3>Άλλες Επιλογές Εμφάνισης</h3>
+      <label class="option-row">
+        <ejs-switch [(ngModel)]="showBreadcrumbs"></ejs-switch>
+        <span><strong>Εμφάνιση breadcrumbs</strong><small>Εμφάνιση διαδρομής πλοήγησης στις σελίδες</small></span>
+      </label>
+      <label class="option-row">
+        <ejs-switch [(ngModel)]="showAvatars"></ejs-switch>
+        <span><strong>Εμφάνιση avatars</strong><small>Εμφάνιση avatar χρηστών</small></span>
+      </label>
+      <label class="option-row">
+        <ejs-switch [(ngModel)]="enableAnimations"></ejs-switch>
+        <span><strong>Κινούμενα εφέ (animations)</strong><small>Ενεργοποίηση μεταβάσεων και εφέ</small></span>
+      </label>
+      <label class="option-row">
+        <ejs-switch [(ngModel)]="compactTables"></ejs-switch>
+        <span><strong>Συμπαγείς πίνακες (compact tables)</strong><small>Μικρότερο ύψος γραμμών στους πίνακες</small></span>
+      </label>
+      <label class="option-row">
+        <ejs-switch [(ngModel)]="helperTips"></ejs-switch>
+        <span><strong>Εμφάνιση βοηθητικών tips</strong><small>Εμφάνιση επεξηγηματικών tooltips</small></span>
+      </label>
+    </section>
+
+    <section class="settings-card preview-card">
+      <h3>Προεπισκόπηση</h3>
+      <div class="admin-preview">
+        <aside>
+          <div class="preview-brand"><span></span>AffiliatePro</div>
+          <div class="preview-link active"><span class="e-icons e-home"></span>Dashboard</div>
+          <div class="preview-link"><span class="e-icons e-chart"></span>Analytics</div>
+          <div class="preview-link"><span class="e-icons e-date-time"></span>Καταστήματα</div>
+          <div class="preview-link"><span class="e-icons e-briefcase"></span>Προϊόντα</div>
+          <div class="preview-link"><span class="e-icons e-link"></span>Affiliate Links</div>
+        </aside>
+        <main>
+          <div class="preview-bar"><span></span></div>
+          <div class="preview-widget chart-widget">
+            <strong>Στατιστικά</strong>
+            <svg viewBox="0 0 160 70" role="img" aria-label="Γράφημα προεπισκόπησης">
+              <polyline points="4,52 26,34 48,44 70,22 92,48 116,20 154,12"></polyline>
+              <circle cx="154" cy="12" r="4"></circle>
+            </svg>
+          </div>
+          <div class="preview-widget activity-widget">
+            <strong>Πρόσφατες δραστηριότητες</strong>
+            <span></span><i></i>
+            <span></span><i></i>
+            <span></span><i></i>
+          </div>
+        </main>
+      </div>
+      <p>Η προεπισκόπηση είναι ενδεικτική και ενδέχεται να διαφέρει από την πραγματική εμφάνιση.</p>
+    </section>
+  </div>
+</section>

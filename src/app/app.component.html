@@ -1,23 +1,5 @@
-<app-header (toggleSidebar)="onToggleSidebar()"></app-header>
+<app-admin-layout *ngIf="isAdminArea; else storefrontLayout"></app-admin-layout>
 
-<!-- Sidebar below header -->
-<ejs-sidebar
-  id="default-sidebar"
-  #sidebar
-  [width]="'300px'"
-   style="visibility: hidden"
-  [showBackdrop]="false"
-  [closeOnDocumentClick]="false"
-  [enableGestures]="true"
-  [enablePersistence]="true"
-  (created)="onCreated()"
-   >
-
-  <categories
-  (categorySelected)="onCategorySelection($event)"></categories>
-</ejs-sidebar>
-
-<!-- Main routed content -->
-<main>
-  <router-outlet></router-outlet>
-</main>
+<ng-template #storefrontLayout>
+  <app-storefront-layout></app-storefront-layout>
+</ng-template>

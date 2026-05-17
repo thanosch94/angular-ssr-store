@@ -1,0 +1,144 @@
+<section class="seo-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Γενικές Ρυθμίσεις SEO</h2>
+      <p>Βασικές ρυθμίσεις που επηρεάζουν το SEO ολόκληρου του συστήματος.</p>
+    </div>
+    <button ejs-button cssClass="e-primary save-button" type="button">
+      <span class="e-icons e-save"></span>
+      Αποθήκευση Αλλαγών
+    </button>
+  </header>
+
+  <div class="seo-content">
+    <section class="settings-card hero-card">
+      <div class="form-grid two-columns">
+        <label class="field">
+          <span class="field-label">Τίτλος Ιστοτόπου (Site Title)</span>
+          <ejs-textbox [(ngModel)]="siteTitle"></ejs-textbox>
+        </label>
+        <label class="field">
+          <span class="field-label">Tagline / Υπότιτλος</span>
+          <ejs-textbox [(ngModel)]="tagline"></ejs-textbox>
+        </label>
+        <label class="field">
+          <span class="field-label">Meta Περιγραφή (Default)</span>
+          <ejs-textbox multiline="true" [(ngModel)]="metaDescription"></ejs-textbox>
+        </label>
+        <label class="field">
+          <span class="field-label">Λέξεις Κλειδιά (Keywords)</span>
+          <ejs-textbox multiline="true" [(ngModel)]="keywords"></ejs-textbox>
+        </label>
+      </div>
+
+      <div class="seo-switches">
+        <label class="switch-row">
+          <span><strong>Ενεργοποίηση SEO</strong><small>Ενεργοποιεί όλες τις SEO λειτουργίες</small></span>
+          <ejs-switch [(ngModel)]="seoEnabled"></ejs-switch>
+        </label>
+        <label class="switch-row">
+          <span><strong>Αυτόματη δημιουργία Sitemap</strong><small>Δημιουργεί και ενημερώνει το sitemap.xml</small></span>
+          <ejs-switch [(ngModel)]="sitemapEnabled"></ejs-switch>
+        </label>
+        <label class="switch-row">
+          <span><strong>Αυτόματη δημιουργία Robots.txt</strong><small>Δημιουργεί και ενημερώνει το robots.txt</small></span>
+          <ejs-switch [(ngModel)]="robotsEnabled"></ejs-switch>
+        </label>
+      </div>
+    </section>
+
+    <div class="middle-grid">
+      <section class="settings-card">
+        <h3>Ρυθμίσεις Open Graph</h3>
+        <p class="card-helper">Ρυθμίσεις για κοινωνική κοινοποίηση (Facebook, LinkedIn κ.λπ.).</p>
+        <div class="og-grid">
+          <button type="button" class="image-drop">
+            <span class="e-icons e-image"></span>
+            <strong>Επιλέξτε εικόνα</strong>
+            <small>Προτεινόμενη διάσταση: 1200x630px JPG, PNG ή WebP</small>
+          </button>
+          <div class="og-fields">
+            <label class="field">
+              <span class="field-label">OG Title</span>
+              <ejs-textbox [(ngModel)]="ogTitle"></ejs-textbox>
+            </label>
+            <label class="field">
+              <span class="field-label">OG Description</span>
+              <ejs-textbox multiline="true" [(ngModel)]="ogDescription"></ejs-textbox>
+            </label>
+          </div>
+          <label class="field">
+            <span class="field-label">OG Type</span>
+            <ejs-dropdownlist [dataSource]="ogTypeOptions" [fields]="fields" [(ngModel)]="ogType"></ejs-dropdownlist>
+          </label>
+          <label class="field">
+            <span class="field-label">OG Locale</span>
+            <ejs-textbox [(ngModel)]="ogLocale"></ejs-textbox>
+          </label>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <h3>Ρυθμίσεις Twitter Card</h3>
+        <p class="card-helper">Ρυθμίσεις για κοινοποίηση στο Twitter.</p>
+        <div class="form-grid two-columns">
+          <label class="field">
+            <span class="field-label">Twitter Card Type</span>
+            <ejs-dropdownlist [dataSource]="twitterCardOptions" [fields]="fields" [(ngModel)]="twitterCardType"></ejs-dropdownlist>
+          </label>
+          <label class="field">
+            <span class="field-label">Twitter Site (όνομα χρήστη)</span>
+            <ejs-textbox [(ngModel)]="twitterSite"></ejs-textbox>
+          </label>
+        </div>
+        <label class="field">
+          <span class="field-label">Twitter Title</span>
+          <ejs-textbox [(ngModel)]="twitterTitle"></ejs-textbox>
+        </label>
+        <label class="field">
+          <span class="field-label">Twitter Description</span>
+          <ejs-textbox multiline="true" [(ngModel)]="twitterDescription"></ejs-textbox>
+        </label>
+      </section>
+    </div>
+
+    <div class="bottom-grid">
+      <section class="settings-card">
+        <h3>Sitemap</h3>
+        <p class="card-helper">Διαχείριση και πληροφορίες για το sitemap.</p>
+        <div class="resource-row">
+          <span><strong>Sitemap URL</strong><a href="#">https://affiliatepro.gr/sitemap.xml</a></span>
+          <button type="button" aria-label="Άνοιγμα sitemap"><span class="e-icons e-open-link"></span></button>
+        </div>
+        <div class="resource-row">
+          <span><strong>Τελευταία ενημέρωση</strong><small>15/05/2024 - 03:15</small></span>
+          <button ejs-button type="button" cssClass="e-outline wide-button">
+            <span class="e-icons e-refresh"></span>
+            Επαναδημιουργία Sitemap
+          </button>
+        </div>
+      </section>
+
+      <section class="settings-card">
+        <h3>Robots.txt</h3>
+        <p class="card-helper">Διαχείριση και πληροφορίες για το robots.txt.</p>
+        <div class="resource-row">
+          <span><strong>Robots.txt URL</strong><a href="#">https://affiliatepro.gr/robots.txt</a></span>
+          <button type="button" aria-label="Άνοιγμα robots"><span class="e-icons e-open-link"></span></button>
+        </div>
+        <div class="resource-row">
+          <span><strong>Τελευταία ενημέρωση</strong><small>15/05/2024 - 03:15</small></span>
+          <button ejs-button type="button" cssClass="e-outline">
+            <span class="e-icons e-edit"></span>
+            Επεξεργασία Robots.txt
+          </button>
+        </div>
+      </section>
+    </div>
+
+    <aside class="info-note">
+      <span class="e-icons e-circle-info"></span>
+      Οι αλλαγές SEO μπορεί να χρειαστούν χρόνο για να αντικατοπτριστούν στις μηχανές αναζήτησης.
+    </aside>
+  </div>
+</section>

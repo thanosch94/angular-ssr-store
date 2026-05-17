@@ -1,0 +1,162 @@
+<section class="shop-edit-page">
+  <header class="page-header">
+    <div>
+      <h1>Επεξεργασία Καταστήματος</h1>
+      <nav>
+        <a>Dashboard</a>
+        <span class="e-icons e-arrow-right"></span>
+        <a>Καταστήματα</a>
+        <span class="e-icons e-arrow-right"></span>
+        <span>Amazon</span>
+      </nav>
+    </div>
+    <div class="header-actions">
+      <button class="date-range" type="button">10/05/2024 - 15/05/2024 <span class="e-icons e-date-time"></span></button>
+      <button class="square-action" type="button" aria-label="Ανανέωση"><span class="e-icons e-refresh"></span></button>
+      <div class="notification"><span class="e-icons e-clock"></span><b>3</b></div>
+      <div class="admin-profile"><div class="avatar"></div><span><strong>Admin</strong><small>Διαχειριστής</small></span></div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="edit-grid">
+      <form class="form-card">
+        <h2>Βασικά Στοιχεία</h2>
+
+        <div class="top-form-grid">
+          <div class="logo-block">
+            <label class="field-label">Λογότυπο</label>
+            <div class="logo-row">
+              <div class="shop-logo">a</div>
+              <div class="logo-actions">
+                <button ejs-button type="button" cssClass="e-outline"><span class="e-icons e-upload-1"></span>Αλλαγή λογότυπου</button>
+                <button ejs-button type="button" cssClass="e-outline danger-outline"><span class="e-icons e-trash"></span>Διαγραφή</button>
+              </div>
+            </div>
+            <small>PNG, JPG ή SVG. Μέγιστο μέγεθος 2MB.</small>
+          </div>
+
+          <div class="stack-fields">
+            <label class="field">
+              <span class="field-label">Όνομα Καταστήματος <b>*</b></span>
+              <ejs-textbox [(ngModel)]="shopName" name="shopName"></ejs-textbox>
+            </label>
+            <label class="field">
+              <span class="field-label">Κατάσταση</span>
+              <ejs-dropdownlist [dataSource]="statusOptions" [fields]="fields" [(ngModel)]="status" name="status"></ejs-dropdownlist>
+            </label>
+          </div>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Website URL <b>*</b></span>
+          <ejs-textbox [(ngModel)]="websiteUrl" name="websiteUrl"></ejs-textbox>
+          <small>Η αρχική σελίδα του καταστήματος</small>
+        </label>
+
+        <div class="form-grid two-columns">
+          <label class="field">
+            <span class="field-label">Κατηγορία <b>*</b></span>
+            <ejs-dropdownlist [dataSource]="categoryOptions" [fields]="fields" [(ngModel)]="category" name="category"></ejs-dropdownlist>
+          </label>
+          <label class="field">
+            <span class="field-label">Πρόγραμμα Συνεργασίας <b>*</b></span>
+            <ejs-dropdownlist [dataSource]="programOptions" [fields]="fields" [(ngModel)]="program" name="program"></ejs-dropdownlist>
+          </label>
+        </div>
+
+        <div class="form-grid commission-grid">
+          <div>
+            <span class="field-label">Προμήθεια (Commission Rate)</span>
+            <div class="form-grid two-columns compact-gap">
+              <label class="field">
+                <span class="field-label muted">Ελάχιστο (%)</span>
+                <ejs-numerictextbox [(ngModel)]="minCommission" name="minCommission" [format]="'n0'"></ejs-numerictextbox>
+              </label>
+              <label class="field">
+                <span class="field-label muted">Μέγιστο (%)</span>
+                <ejs-numerictextbox [(ngModel)]="maxCommission" name="maxCommission" [format]="'n0'"></ejs-numerictextbox>
+              </label>
+            </div>
+            <small>Το εύρος προμήθειας που προσφέρει το πρόγραμμα.</small>
+          </div>
+          <label class="field">
+            <span class="field-label">Νόμισμα</span>
+            <ejs-dropdownlist [dataSource]="currencyOptions" [fields]="fields" [(ngModel)]="currency" name="currency"></ejs-dropdownlist>
+            <small>Νόμισμα στο οποίο υπολογίζεται η προμήθεια.</small>
+          </label>
+        </div>
+
+        <label class="field">
+          <span class="field-label">Περιγραφή</span>
+          <ejs-textarea [(ngModel)]="description" name="description" rows="4"></ejs-textarea>
+          <small>Μέγιστοι 500 χαρακτήρες.</small>
+        </label>
+
+        <h3>Ρυθμίσεις Tracking</h3>
+        <div class="form-grid two-columns">
+          <label class="field">
+            <span class="field-label">Tracking Parameter</span>
+            <ejs-textbox [(ngModel)]="trackingParameter" name="trackingParameter"></ejs-textbox>
+            <small>Το όνομα του URL parameter που χρησιμοποιείται για tracking.</small>
+          </label>
+          <label class="field">
+            <span class="field-label">Default Tracking Value</span>
+            <ejs-textbox [(ngModel)]="trackingValue" name="trackingValue"></ejs-textbox>
+            <small>Η προεπιλεγμένη τιμή που θα χρησιμοποιείται στα links.</small>
+          </label>
+        </div>
+
+        <div class="toggle-grid">
+          <label class="toggle-row">
+            <ejs-switch [(ngModel)]="nofollowLinks" name="nofollowLinks"></ejs-switch>
+            <span><strong>Προσθήκη nofollow στα links</strong><small>Προσθέτει το rel="nofollow" σε όλους τους affiliate links.</small></span>
+          </label>
+          <label class="toggle-row">
+            <ejs-switch [(ngModel)]="openNewWindow" name="openNewWindow"></ejs-switch>
+            <span><strong>Άνοιγμα σε νέο παράθυρο</strong><small>Τα affiliate links θα ανοίγουν σε νέο παράθυρο.</small></span>
+          </label>
+        </div>
+      </form>
+
+      <aside class="side-panel">
+        <section class="info-card">
+          <h2>Σύνοψη Απόδοσης <span>(30 ΗΜ.)</span></h2>
+          <div class="metric-row"><span class="metric-icon purple e-icons e-link"></span><strong>Clicks</strong><b>18,742</b><small>↑ 18.4%</small></div>
+          <div class="metric-row"><span class="metric-icon blue e-icons e-arrow-right-up"></span><strong>EPC</strong><b>€0.48</b><small>↑ 11.5%</small></div>
+          <div class="metric-row"><span class="metric-icon green e-icons e-export"></span><strong>Έσοδα</strong><b>€601.92</b><small>↑ 21.2%</small></div>
+          <div class="metric-row"><span class="metric-icon red e-icons e-eye"></span><strong>CTR</strong><b>3.50%</b><small>↑ 1.6pp</small></div>
+        </section>
+
+        <section class="info-card details-card">
+          <h2>Πληροφορίες Προγράμματος</h2>
+          <dl>
+            <dt>Δίκτυο</dt><dd>Amazon</dd>
+            <dt>Τύπος</dt><dd>CPA (Cost Per Action)</dd>
+            <dt>Cookie Duration</dt><dd>24 ώρες</dd>
+            <dt>Χώρα</dt><dd>Παγκόσμιο</dd>
+            <dt>Όροι & Προϋποθέσεις</dt><dd><a href="#">Προβολή όρων <span class="e-icons e-open-link"></span></a></dd>
+          </dl>
+        </section>
+
+        <section class="info-card details-card">
+          <h2>Ημερομηνίες</h2>
+          <dl>
+            <dt>Ημερομηνία Δημιουργίας</dt><dd>12/03/2024 14:25</dd>
+            <dt>Τελευταία Ενημέρωση</dt><dd>15/05/2024 10:30</dd>
+            <dt>Δημιουργήθηκε από</dt><dd>Admin</dd>
+            <dt>Τελευταία ενημέρωση από</dt><dd>Admin</dd>
+          </dl>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="bottom-actions">
+      <button ejs-button type="button" cssClass="e-outline delete-button">Διαγραφή Καταστήματος</button>
+      <div>
+        <button ejs-button type="button" cssClass="e-outline cancel-button">Ακύρωση</button>
+        <button ejs-button type="button" cssClass="e-primary save-button">Αποθήκευση Αλλαγών</button>
+      </div>
+    </footer>
+  </main>
+</section>

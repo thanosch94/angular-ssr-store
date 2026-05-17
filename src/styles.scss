@@ -1,7 +1,45 @@
 @import '../node_modules/@syncfusion/ej2-material-theme/styles/material.css';
+@import '../node_modules/@syncfusion/ej2-material-theme/styles/material.css';
 /* You can add global styles to this file, and also import other style files */
 @import '../node_modules/@syncfusion/ej2-material-theme/styles/offline-theme/material.css';
 @import "../node_modules/@syncfusion/ej2-icons/styles/material.css";
+
+:root {
+  --color-bg: #fbfaf7;
+  --color-surface: #ffffff;
+  --color-surface-soft: #f3eee8;
+  --color-text: #24211f;
+  --color-muted: #706a63;
+  --color-border: #ebe4dc;
+  --color-primary: #bd644c;
+  --color-primary-dark: #8f4635;
+  --color-accent: #687059;
+  --shadow-soft: 0 14px 40px rgba(48, 37, 28, 0.08);
+  --radius-sm: 8px;
+  --radius-md: 16px;
+  --radius-lg: 28px;
+  --gap-xs: 0.5rem;
+  --gap-sm: 0.75rem;
+  --gap-md: 1rem;
+  --gap-lg: 1.5rem;
+  --gap-xl: 2.5rem;
+  --page-max: 1480px;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  background: var(--color-bg);
+  color: var(--color-text);
+  font-family: Inter, "Segoe UI", Arial, sans-serif;
+}
+
+a {
+  color: inherit;
+}
 
 //General
 .flex{
@@ -90,6 +128,72 @@
 
 .product-page__go-to-eshop:hover {
   background-color: #8d1f1f;
+}
+
+app-admin-layout .e-grid {
+  border: 0 !important;
+  border-radius: 0 !important;
+  font-family: "Segoe UI", Arial, sans-serif !important;
+}
+
+app-admin-layout .e-grid table {
+  min-width: 0 !important;
+  border-collapse: separate !important;
+  border-spacing: 0 !important;
+}
+
+app-admin-layout .e-grid .e-gridheader,
+app-admin-layout .e-grid .e-headercontent,
+app-admin-layout .e-grid .e-content,
+app-admin-layout .e-grid .e-gridcontent {
+  border-color: #edf1f6 !important;
+}
+
+app-admin-layout .e-grid .e-headercell,
+app-admin-layout .e-grid .e-rowcell {
+  border-color: #edf1f6 !important;
+  box-shadow: none !important;
+}
+
+app-admin-layout .e-grid .e-headercell {
+  background: #fff !important;
+  color: #63718a !important;
+  font-size: 12px !important;
+  font-weight: 800 !important;
+  text-transform: uppercase !important;
+}
+
+app-admin-layout .e-grid .e-rowcell {
+  background: #fff !important;
+  color: #17233b !important;
+  cursor: pointer !important;
+  font-size: 14px !important;
+  vertical-align: middle !important;
+  white-space: nowrap !important;
+  transition: none !important;
+}
+
+app-admin-layout .e-grid .e-row,
+app-admin-layout .e-grid .e-rowcell,
+app-admin-layout .e-grid .e-templatecell {
+  transition: none !important;
+}
+
+app-admin-layout .e-grid .e-row:hover .e-rowcell,
+app-admin-layout .e-grid .e-row:hover .e-templatecell {
+  background: #f8faff !important;
+}
+
+app-admin-layout .e-grid .e-row.e-selectionbackground .e-rowcell,
+app-admin-layout .e-grid .e-row.e-active .e-rowcell,
+app-admin-layout .e-grid .e-row[aria-selected='true'] .e-rowcell {
+  background: #f1edff !important;
+}
+
+app-admin-layout .e-grid .e-rowcell button,
+app-admin-layout .e-grid .e-rowcell a,
+app-admin-layout .e-grid .e-rowcell .e-checkbox-wrapper {
+  cursor: pointer !important;
 }
 
 

@@ -1,0 +1,63 @@
+<section class="settings-page">
+  <header class="settings-header">
+    <div>
+      <h1>{{ pageTitle }}</h1>
+      <p>{{ pageSubtitle }}</p>
+    </div>
+
+    <div class="header-actions">
+      <button class="date-range" type="button">
+        10/05/2024 - 15/05/2024
+        <span class="e-icons e-month"></span>
+      </button>
+      <button class="square-action" type="button" aria-label="Ανανέωση">
+        <span class="e-icons e-refresh"></span>
+      </button>
+      <div class="notification" aria-label="Ειδοποιήσεις">
+        <span class="e-icons e-notes notification-icon"></span>
+        <b>3</b>
+      </div>
+      <div class="admin-profile">
+        <div class="avatar"></div>
+        <div>
+          <strong>Admin</strong>
+          <small>Διαχειριστής</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="settings-content">
+    <aside class="settings-categories">
+      <h2>Κατηγορίες Ρυθμίσεων</h2>
+      <button
+        *ngFor="let category of categories"
+        type="button"
+        class="category-item"
+        [class.active]="activeCategory === category.key"
+        (click)="selectCategory(category)">
+        <span class="category-icon e-icons" [ngClass]="category.iconClass"></span>
+        <span>
+          <strong>{{ category.title }}</strong>
+          <small>{{ category.description }}</small>
+        </span>
+      </button>
+    </aside>
+
+    <section class="settings-panel">
+      <app-general-settings *ngIf="activeCategory === 'general'"></app-general-settings>
+      <app-appearance-settings *ngIf="activeCategory === 'appearance'"></app-appearance-settings>
+      <app-email-settings *ngIf="activeCategory === 'email'"></app-email-settings>
+      <app-analytics-settings *ngIf="activeCategory === 'analytics'"></app-analytics-settings>
+      <app-security-settings *ngIf="activeCategory === 'security'"></app-security-settings>
+      <app-seo-settings *ngIf="activeCategory === 'seo'"></app-seo-settings>
+      <app-notifications-settings *ngIf="activeCategory === 'notifications'"></app-notifications-settings>
+      <app-backup-settings *ngIf="activeCategory === 'backup'"></app-backup-settings>
+      <div *ngIf="!isKnownCategory" class="coming-soon">
+        <span class="e-icons e-settings"></span>
+        <h2>{{ activeCategoryTitle }}</h2>
+        <p>Η συγκεκριμένη κατηγορία θα προστεθεί σε επόμενο βήμα.</p>
+      </div>
+    </section>
+  </main>
+</section>

@@ -1,0 +1,90 @@
+name: Deploy Angular SSR to Windows Server
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  deploy:
+    runs-on: self-hosted
+
+    env:
+      APP_NAME: "All for Home"
+      DEPLOY_PATH: "C:\\inetpub\\wwwroot\\AllForHome"
+      PM2_APP_NAME: "all-for-home-ssr"
+
+    steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: 24
+
+      - name: Install dependencies
+        run: npm ci
+
+      - name: Build Angular SSR
+        run: npm run build -- --configuration production
+
+      - name: Stop existing PM2 process
+        shell: powershell
+        run: |
+          pm2 stop $env:PM2_APP_NAME
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "PM2 process was not running."
+          }
+
+      - name: Prepare deploy folder
+        shell: powershell
+        run: |
+          if (!(Test-Path $env:DEPLOY_PATH)) {
+            New-Item -ItemType Directory -Path $env:DEPLOY_PATH -Force
+          }
+
+          Remove-Item "$env:DEPLOY_PATH\*" -Recurse -Force
+
+      - name: Copy build output
+        shell: powershell
+        run: |
+          Copy-Item "dist\$env:APP_NAME\*" $env:DEPLOY_PATH -Recurse -Force
+          Copy-Item "package.json" $env:DEPLOY_PATH -Force
+          Copy-Item "package-lock.json" $env:DEPLOY_PATH -Force
+
+      - name: Create PM2 ecosystem file
+        shell: powershell
+        working-directory: ${{ env.DEPLOY_PATH }}
+        run: |
+          @"
+          module.exports = {
+            apps: [
+              {
+                name: "all-for-home-ssr",
+                script: ".\\server\\server.mjs",
+                env: {
+                  NODE_ENV: "production",
+                  PORT: 4000
+                }
+              }
+            ]
+          };
+          "@ | Out-File -FilePath "ecosystem.config.js" -Encoding UTF8
+
+      - name: Install production dependencies
+        shell: powershell
+        working-directory: ${{ env.DEPLOY_PATH }}
+        run: npm ci --omit=dev
+
+      - name: Restart Angular SSR with PM2
+        shell: powershell
+        working-directory: ${{ env.DEPLOY_PATH }}
+        run: |
+          pm2 delete $env:PM2_APP_NAME
+          if ($LASTEXITCODE -ne 0) {
+            Write-Host "PM2 process was not registered."
+          }
+
+          pm2 start ecosystem.config.js
+          pm2 save

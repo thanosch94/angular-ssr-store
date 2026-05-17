@@ -1,0 +1,117 @@
+<section class="user-edit-page">
+  <header class="page-header">
+    <div class="title-area">
+      <nav>
+        <a (click)="backToList()">Χρήστες</a>
+        <span class="e-icons e-chevron-right"></span>
+        <span>Επεξεργασία Χρήστη</span>
+      </nav>
+      <h1>Επεξεργασία Χρήστη</h1>
+      <p>Ενημερώστε τα στοιχεία και τις ρυθμίσεις του χρήστη.</p>
+    </div>
+
+    <div class="header-actions">
+      <button class="date-range" type="button">10/05/2024 - 15/05/2024 <span class="e-icons e-date-time"></span></button>
+      <button class="square-action" type="button" aria-label="Ανανέωση"><span class="e-icons e-refresh"></span></button>
+      <div class="notification"><span class="e-icons e-clock"></span><b>3</b></div>
+      <div class="admin-profile">
+        <div class="avatar-small"></div>
+        <span><strong>Admin</strong><small>Διαχειριστής</small></span>
+        <span class="e-icons e-chevron-down"></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <div class="top-actions">
+      <button ejs-button type="button" cssClass="e-outline" (click)="backToList()"><span class="e-icons e-arrow-left"></span>Επιστροφή στη λίστα</button>
+      <button ejs-button type="button" cssClass="e-outline danger-outline"><span class="e-icons e-circle-remove"></span>Απενεργοποίηση Χρήστη</button>
+      <button ejs-button type="button" cssClass="e-primary"><span class="e-icons e-save"></span>Αποθήκευση Αλλαγών</button>
+    </div>
+
+    <section class="edit-layout">
+      <div class="left-column">
+        <section class="panel-card basic-card">
+          <h2>Βασικές Πληροφορίες</h2>
+          <div class="basic-grid">
+            <div class="photo-block">
+              <div class="profile-photo">
+                <img src="https://images.unsplash.com/photo-1500648767791-00dcc994a43e?w=220&h=220&fit=crop&crop=face" alt="Γιάννης Παπαδόπουλος">
+                <button type="button" aria-label="Αλλαγή φωτογραφίας"><span class="e-icons e-image"></span></button>
+              </div>
+              <small>Επιτρεπόμενες μορφές: JPG, PNG</small>
+              <small>Μέγιστο μέγεθος: 2MB</small>
+              <button ejs-button type="button" cssClass="e-outline purple-outline">Αλλαγή Φωτογραφίας</button>
+            </div>
+
+            <div class="form-area">
+              <div class="form-grid two-columns">
+                <label class="field"><span>Όνομα <b>*</b></span><ejs-textbox [(ngModel)]="firstName" name="firstName"></ejs-textbox></label>
+                <label class="field"><span>Επώνυμο <b>*</b></span><ejs-textbox [(ngModel)]="lastName" name="lastName"></ejs-textbox></label>
+                <label class="field"><span>Email <b>*</b></span><ejs-textbox [(ngModel)]="email" name="email"></ejs-textbox></label>
+                <label class="field"><span>Όνομα Χρήστη <b>*</b></span><ejs-textbox [(ngModel)]="username" name="username"></ejs-textbox></label>
+                <label class="field"><span>Ρόλος <b>*</b></span><ejs-dropdownlist [dataSource]="roleOptions" [fields]="fields" [(ngModel)]="role" name="role"></ejs-dropdownlist></label>
+                <label class="field"><span>Γλώσσα</span><ejs-dropdownlist [dataSource]="languageOptions" [fields]="fields" [(ngModel)]="language" name="language"></ejs-dropdownlist></label>
+              </div>
+              <label class="field bio-field">
+                <span>Βιογραφικό</span>
+                <ejs-textarea [(ngModel)]="bio" name="bio" rows="4"></ejs-textarea>
+                <small>59/500</small>
+              </label>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-card security-card">
+          <h2>Ασφάλεια</h2>
+          <div class="security-row"><span>Κωδικός Πρόσβασης</span><strong>••••••••••</strong><button ejs-button type="button" cssClass="e-outline">Αλλαγή Κωδικού</button></div>
+          <div class="security-row"><span>Δυο-Παραγοντικός Έλεγχος (2FA)</span><strong class="success-pill">Ενεργός</strong><button ejs-button type="button" cssClass="e-outline">Διαχείριση 2FA</button></div>
+          <div class="security-row"><span>Ενεργές Συνεδρίες</span><strong>2 ενεργές συσκευές</strong><button ejs-button type="button" cssClass="e-outline">Προβολή Συσκευών</button></div>
+        </section>
+
+        <section class="panel-card permissions-card">
+          <h2>Δικαιώματα Πρόσβασης</h2>
+          <p>Επιλέξτε ποιες ενότητες μπορεί να διαχειρίζεται ο χρήστης.</p>
+          <div class="permissions-grid">
+            <label class="permission-item" *ngFor="let permission of permissions">
+              <ejs-checkbox [(ngModel)]="permission.enabled" [name]="permission.title"></ejs-checkbox>
+              <span><strong>{{ permission.title }}</strong><small>{{ permission.description }}</small></span>
+            </label>
+          </div>
+        </section>
+      </div>
+
+      <aside class="right-column">
+        <section class="panel-card summary-card">
+          <h2>Σύνοψη Λογαριασμού</h2>
+          <dl>
+            <dt>Κατάσταση</dt><dd><span class="status-dot"></span>Ενεργός</dd>
+            <dt>Ρόλος</dt><dd><span class="role-pill">Διαχειριστής</span></dd>
+            <dt>Ημερομηνία Δημιουργίας</dt><dd>12/01/2024 - 09:20</dd>
+            <dt>Τελευταία Σύνδεση</dt><dd>15/05/2024 - 10:30</dd>
+            <dt>Σύνδεση από</dt><dd>192.168.1.45</dd>
+            <dt>Συνολικές Συνδέσεις</dt><dd>86</dd>
+          </dl>
+        </section>
+
+        <section class="panel-card activity-card">
+          <h2>Δραστηριότητα Χρήστη</h2>
+          <div class="timeline">
+            <div class="activity-item" *ngFor="let item of activity" [ngClass]="item.tone">
+              <i></i>
+              <div><strong>{{ item.title }}</strong><small>{{ item.subtitle }}</small></div>
+              <time>{{ item.time }}</time>
+            </div>
+          </div>
+          <button ejs-button type="button" cssClass="e-outline full-button"><span class="e-icons e-recurrence-edit"></span>Προβολή πλήρους ιστορικού</button>
+        </section>
+
+        <section class="panel-card related-card">
+          <h2>Συσχετισμένα</h2>
+          <button type="button"><span class="e-icons e-user"></span>Προβολή προφίλ χρήστη</button>
+          <button type="button"><span class="e-icons e-copy"></span>Αντιγραφή στοιχείων χρήστη</button>
+        </section>
+      </aside>
+    </section>
+  </main>
+</section>

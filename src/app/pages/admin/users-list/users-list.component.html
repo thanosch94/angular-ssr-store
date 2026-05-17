@@ -1,0 +1,68 @@
+<section class="users-page">
+  <header class="page-header">
+    <div><h1>Χρήστες</h1><p>Διαχείριση χρηστών και ρόλων</p></div>
+    <div class="header-actions">
+      <button class="date-range" type="button">10/05/2024 - 15/05/2024 <span class="e-icons e-date-time"></span></button>
+      <button class="square-action" type="button" aria-label="Ανανέωση"><span class="e-icons e-refresh"></span></button>
+      <div class="notification"><span class="e-icons e-clock"></span><b>3</b></div>
+      <div class="admin-profile"><div class="avatar"></div><span><strong>Admin</strong><small>Διαχειριστής</small></span><span class="e-icons e-chevron-down"></span></div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="users-layout">
+      <div class="main-column">
+        <section class="filters-card">
+          <ejs-textbox placeholder="Αναζήτηση χρήστη..." [ngModel]="searchTerm" (ngModelChange)="searchTerm = $event; refreshFilteredUsers()"></ejs-textbox>
+          <label><span>Ρόλος</span><ejs-dropdownlist [dataSource]="roleOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="selectedRole" (ngModelChange)="selectedRole = $event; refreshFilteredUsers()"></ejs-dropdownlist></label>
+          <label><span>Κατάσταση</span><ejs-dropdownlist [dataSource]="statusOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="selectedStatus" (ngModelChange)="selectedStatus = $event; refreshFilteredUsers()"></ejs-dropdownlist></label>
+          <button ejs-button type="button" cssClass="e-primary add-button"><span class="e-icons e-plus"></span> Προσθήκη Χρήστη</button>
+        </section>
+
+        <section class="table-card">
+          <div class="table-wrap">
+            <ejs-grid [dataSource]="filteredUsers" gridLines="Horizontal" [allowSorting]="false" [allowSelection]="true" [selectionSettings]="gridSelectionSettings" [enableHover]="false" (recordClick)="selectUserRecord($event.rowData)">
+              <e-columns>
+                <e-column headerText="Χρήστης" width="260">
+                  <ng-template #template let-user><div class="user-cell"><img [src]="user.avatar" [alt]="user.name"><span><strong>{{ user.name }}</strong><small>{{ user.username }}</small></span></div></ng-template>
+                </e-column>
+                <e-column field="email" headerText="Email" width="230"></e-column>
+                <e-column headerText="Ρόλος" width="140"><ng-template #template let-user><span class="role-pill" [ngClass]="user.role">{{ getRoleLabel(user.role) }}</span></ng-template></e-column>
+                <e-column headerText="Κατάσταση" width="140"><ng-template #template let-user><span class="status-pill" [class.inactive]="user.status === 'inactive'"><i></i>{{ getStatusLabel(user.status) }}</span></ng-template></e-column>
+                <e-column field="lastLogin" headerText="Τελευταία Σύνδεση" width="190"></e-column>
+                <e-column headerText="Ενέργειες" width="150">
+                  <ng-template #template let-user>
+                    <div class="row-actions">
+                      <button type="button" aria-label="Επεξεργασία" (click)="$event.stopPropagation(); editUser(user)"><span class="e-icons e-edit"></span></button>
+                      <button type="button" aria-label="Προβολή" (click)="$event.stopPropagation()"><span class="e-icons e-eye"></span></button>
+                      <button type="button" aria-label="Περισσότερα" (click)="$event.stopPropagation()"><span class="e-icons e-more-vertical-1"></span></button>
+                    </div>
+                  </ng-template>
+                </e-column>
+              </e-columns>
+            </ejs-grid>
+          </div>
+
+          <footer class="table-footer">
+            <span>Εμφανίζονται 1 έως {{ filteredUsers.length }} από 24 χρήστες</span>
+            <div class="pagination"><span>Ανά σελίδα:</span><ejs-dropdownlist class="page-size" [dataSource]="pageSizeOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="pageSize"></ejs-dropdownlist><button type="button"><span class="e-icons e-chevron-left-double"></span></button><button type="button"><span class="e-icons e-chevron-left"></span></button><button type="button" class="active">1</button><button type="button">2</button><button type="button">3</button><button type="button"><span class="e-icons e-chevron-right"></span></button><button type="button"><span class="e-icons e-chevron-right-double"></span></button></div>
+          </footer>
+        </section>
+      </div>
+
+      <aside class="details-panel">
+        <button class="close-button" type="button" aria-label="Κλείσιμο"><span class="e-icons e-close"></span></button>
+        <section class="profile-card"><div class="profile-photo"><img [src]="selectedUser.avatar" [alt]="selectedUser.name"><i [class.inactive]="selectedUser.status === 'inactive'"></i></div><h2>{{ selectedUser.name }}</h2><span class="profile-role">{{ getRoleLabel(selectedUser.role) }}</span><p>{{ selectedUser.email }}</p></section>
+        <section class="side-section">
+          <h3>Πληροφορίες</h3>
+          <div class="info-row"><span class="e-icons e-date-time"></span><div><small>Ημερομηνία Δημιουργίας</small><strong>{{ selectedUser.created }} - 09:20</strong></div></div>
+          <div class="info-row"><span class="e-icons e-clock"></span><div><small>Τελευταία Σύνδεση</small><strong>{{ selectedUser.lastLogin }}</strong></div></div>
+          <div class="info-row"><span class="e-icons e-web-layout"></span><div><small>Ζώνη ώρας</small><strong>(GMT+02:00) Αθήνα</strong></div></div>
+          <div class="info-row"><span class="e-icons e-bookmark"></span><div><small>Γλώσσα</small><strong>Ελληνικά</strong></div></div>
+        </section>
+        <section class="side-section"><h3>Στατιστικά</h3><div class="stats-grid"><article><span class="e-icons e-file-document"></span><strong>56</strong><small>Άρθρα</small></article><article><span class="e-icons e-link"></span><strong>128</strong><small>Affiliate Links</small></article><article><span class="e-icons e-eye"></span><strong>24,560</strong><small>Προβολές</small></article><article><span class="e-icons e-chart"></span><strong>1,245</strong><small>Κλικ</small></article></div></section>
+        <button ejs-button type="button" cssClass="e-outline deactivate-button"><span class="e-icons e-circle-remove"></span> Απενεργοποίηση Χρήστη</button>
+      </aside>
+    </section>
+  </main>
+</section>

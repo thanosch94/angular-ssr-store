@@ -1,0 +1,154 @@
+<section class="security-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Ρυθμίσεις Ασφαλείας</h2>
+      <p>Προστατέψτε το σύστημα και τα δεδομένα σας με ισχυρές ρυθμίσεις ασφαλείας.</p>
+    </div>
+    <button ejs-button cssClass="e-primary save-button" type="button">
+      <span class="e-icons e-save"></span>
+      Αποθήκευση Αλλαγών
+    </button>
+  </header>
+
+  <div class="security-content">
+    <div class="security-grid">
+      <section class="settings-card">
+        <div class="card-title">
+          <h3>Ρυθμίσεις Συνεδρίας</h3>
+          <span class="e-icons e-circle-info"></span>
+        </div>
+        <label class="setting-line">
+          <span>Μέγιστη διάρκεια συνεδρίας</span>
+          <ejs-dropdownlist [dataSource]="sessionOptions" [fields]="fields" [(ngModel)]="sessionDuration"></ejs-dropdownlist>
+        </label>
+        <label class="setting-line">
+          <span>Αυτόματη αποσύνδεση λόγω αδράνειας</span>
+          <ejs-dropdownlist [dataSource]="idleOptions" [fields]="fields" [(ngModel)]="idleTimeout"></ejs-dropdownlist>
+        </label>
+        <label class="switch-line">
+          <span><strong>Να θυμάται τη συσκευή</strong><small>Διατηρεί τη σύνδεση για αξιόπιστες συσκευές</small></span>
+          <ejs-switch [(ngModel)]="rememberDevice"></ejs-switch>
+        </label>
+        <label class="switch-line">
+          <span><strong>Εμφάνιση ειδοποίησης πριν την αποσύνδεση</strong><small>Ειδοποιεί τον χρήστη πριν τη λήξη της συνεδρίας</small></span>
+          <ejs-switch [(ngModel)]="logoutWarning"></ejs-switch>
+        </label>
+      </section>
+
+      <section class="settings-card">
+        <h3>Επαλήθευση Δύο Παραγόντων (2FA)</h3>
+        <p class="card-helper">Ενισχύστε την ασφάλεια των λογαριασμών χρηστών.</p>
+        <label class="switch-line top-switch">
+          <strong>Απαίτηση 2FA για όλους τους διαχειριστές</strong>
+          <ejs-switch [(ngModel)]="require2fa"></ejs-switch>
+        </label>
+        <div class="checkbox-group">
+          <span>Επιτρεπόμενες μέθοδοι 2FA</span>
+          <ejs-checkbox label="Εφαρμογή Authenticator (TOTP)" [(ngModel)]="methodTotp"></ejs-checkbox>
+          <ejs-checkbox label="SMS" [(ngModel)]="methodSms"></ejs-checkbox>
+          <ejs-checkbox label="Email" [(ngModel)]="methodEmail"></ejs-checkbox>
+        </div>
+        <aside class="inline-note">
+          <span class="e-icons e-circle-info"></span>
+          Οι χρήστες μπορούν να διαχειριστούν τις ρυθμίσεις 2FA από το προφίλ τους.
+        </aside>
+      </section>
+
+      <section class="settings-card">
+        <div class="card-title">
+          <h3>Πολιτική Κωδικών</h3>
+          <span class="e-icons e-circle-info"></span>
+        </div>
+        <label class="setting-line">
+          <span>Ελάχιστο μήκος κωδικού</span>
+          <ejs-dropdownlist [dataSource]="passwordLengthOptions" [fields]="fields" [(ngModel)]="passwordLength"></ejs-dropdownlist>
+        </label>
+        <label class="switch-line compact">
+          <span>Απαιτείται πεζά γράμματα</span>
+          <ejs-switch [(ngModel)]="requireLowercase"></ejs-switch>
+        </label>
+        <label class="switch-line compact">
+          <span>Απαιτείται κεφαλαία γράμματα</span>
+          <ejs-switch [(ngModel)]="requireUppercase"></ejs-switch>
+        </label>
+        <label class="switch-line compact">
+          <span>Απαιτείται αριθμός</span>
+          <ejs-switch [(ngModel)]="requireNumber"></ejs-switch>
+        </label>
+        <label class="switch-line compact">
+          <span>Απαιτείται ειδικός χαρακτήρας</span>
+          <ejs-switch [(ngModel)]="requireSpecial"></ejs-switch>
+        </label>
+        <label class="setting-line">
+          <span>Λήξη κωδικού (ημέρες)</span>
+          <ejs-dropdownlist [dataSource]="passwordExpiryOptions" [fields]="fields" [(ngModel)]="passwordExpiry"></ejs-dropdownlist>
+        </label>
+        <label class="setting-line">
+          <span>Αποτροπή επαναχρησιμοποίησης κωδικών</span>
+          <ejs-dropdownlist [dataSource]="passwordHistoryOptions" [fields]="fields" [(ngModel)]="passwordHistory"></ejs-dropdownlist>
+        </label>
+      </section>
+
+      <section class="settings-card">
+        <h3>Προστασία Σύνδεσης</h3>
+        <label class="setting-line">
+          <span>Περιορισμός αποτυχημένων προσπαθειών</span>
+          <ejs-dropdownlist [dataSource]="failedAttemptsOptions" [fields]="fields" [(ngModel)]="failedAttempts"></ejs-dropdownlist>
+        </label>
+        <label class="setting-line">
+          <span>Κλείδωμα λογαριασμού για</span>
+          <ejs-dropdownlist [dataSource]="lockDurationOptions" [fields]="fields" [(ngModel)]="lockDuration"></ejs-dropdownlist>
+        </label>
+        <label class="switch-line compact">
+          <span>Καταγραφή αποτυχημένων προσπαθειών</span>
+          <ejs-switch [(ngModel)]="logFailedAttempts"></ejs-switch>
+        </label>
+        <label class="switch-line compact">
+          <span>CAPTCHA στη σελίδα σύνδεσης</span>
+          <ejs-switch [(ngModel)]="captchaLogin"></ejs-switch>
+        </label>
+        <aside class="warning-note">
+          <span class="e-icons e-warning"></span>
+          Μετά από 5 αποτυχημένες προσπάθειες, ο λογαριασμός κλειδώνεται προσωρινά για 15 λεπτά.
+        </aside>
+      </section>
+
+      <section class="settings-card small-card">
+        <h3>IP &amp; Πρόσβαση</h3>
+        <label class="switch-line">
+          <span><strong>Περιορισμός πρόσβασης με IP</strong><small>Επιτρέψτε πρόσβαση μόνο από συγκεκριμένες IP διευθύνσεις</small></span>
+          <ejs-switch [(ngModel)]="restrictByIp"></ejs-switch>
+        </label>
+        <div class="manage-row">
+          <span><strong>Λίστα επιτρεπόμενων IP</strong><small>0 IPs προστέθηκαν</small></span>
+          <button ejs-button type="button" cssClass="e-outline">Διαχείριση</button>
+        </div>
+        <label class="switch-line">
+          <span><strong>Ειδοποίηση για νέες συνδέσεις</strong><small>Αποστολή email σε περίπτωση σύνδεσης από νέα συσκευή/IP</small></span>
+          <ejs-switch [(ngModel)]="newConnectionAlerts"></ejs-switch>
+        </label>
+      </section>
+
+      <section class="settings-card small-card">
+        <h3>Καταγραφές Ασφαλείας</h3>
+        <label class="switch-line">
+          <span><strong>Καταγραφή δραστηριοτήτων ασφαλείας</strong><small>Καταγραφή συνδέσεων, αλλαγών κωδικών και κρίσιμων ενεργειών</small></span>
+          <ejs-switch [(ngModel)]="securityActivityLog"></ejs-switch>
+        </label>
+        <label class="setting-line">
+          <span>Διατήρηση αρχείων καταγραφής</span>
+          <ejs-dropdownlist [dataSource]="retentionOptions" [fields]="fields" [(ngModel)]="logRetention"></ejs-dropdownlist>
+        </label>
+        <label class="switch-line">
+          <span><strong>Email ειδοποιήσεις για κρίσιμα γεγονότα</strong><small>Ειδοποιήσεις για ύποπτες δραστηριότητες</small></span>
+          <ejs-switch [(ngModel)]="criticalEmailAlerts"></ejs-switch>
+        </label>
+      </section>
+    </div>
+
+    <aside class="info-note">
+      <span class="e-icons e-circle-info"></span>
+      Οι ρυθμίσεις ασφαλείας εφαρμόζονται σε όλους τους χρήστες του συστήματος.
+    </aside>
+  </div>
+</section>

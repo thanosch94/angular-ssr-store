@@ -1,0 +1,159 @@
+<section class="category-edit-page">
+  <header class="page-header">
+    <div>
+      <h1>Επεξεργασία Κατηγορίας</h1>
+      <nav>
+        <a>Dashboard</a>
+        <span class="e-icons e-chevron-right"></span>
+        <a>Κατηγορίες</a>
+        <span class="e-icons e-chevron-right"></span>
+        <span>Επεξεργασία</span>
+      </nav>
+    </div>
+
+    <div class="header-actions">
+      <button class="date-range" type="button">10/05/2024 - 15/05/2024 <span class="e-icons e-date-time"></span></button>
+      <button class="square-action" type="button" aria-label="Ανανέωση"><span class="e-icons e-refresh"></span></button>
+      <div class="notification"><span class="e-icons e-clock"></span><b>3</b></div>
+      <div class="admin-profile">
+        <div class="avatar"></div>
+        <span><strong>Admin</strong><small>Διαχειριστής</small></span>
+        <span class="e-icons e-chevron-down"></span>
+      </div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="edit-grid">
+      <div class="left-column">
+        <section class="panel-card basic-card">
+          <h2>Βασικά Στοιχεία</h2>
+
+          <div class="basic-grid">
+            <div class="icon-block">
+              <span class="field-label">Εικονίδιο Κατηγορίας</span>
+              <div class="category-preview">
+                <span class="e-icons e-display"></span>
+              </div>
+              <button ejs-button type="button" cssClass="e-outline purple-outline"><span class="e-icons e-upload-1"></span>Αλλαγή Εικονιδίου</button>
+              <button ejs-button type="button" cssClass="e-outline danger-outline"><span class="e-icons e-trash"></span>Καθαρισμός</button>
+              <small>PNG, JPG ή SVG. Μέγιστο μέγεθος 2MB.</small>
+            </div>
+
+            <div class="form-area">
+              <div class="form-grid two-columns">
+                <label class="field">
+                  <span class="field-label">Όνομα Κατηγορίας <b>*</b></span>
+                  <ejs-textbox [(ngModel)]="categoryName" name="categoryName"></ejs-textbox>
+                </label>
+                <label class="field">
+                  <span class="field-label">Slug <b>*</b></span>
+                  <ejs-textbox [(ngModel)]="slug" name="slug"></ejs-textbox>
+                </label>
+              </div>
+
+              <label class="field parent-field">
+                <span class="field-label">Γονική Κατηγορία</span>
+                <ejs-dropdownlist [dataSource]="parentOptions" [fields]="fields" [(ngModel)]="parentCategory" name="parentCategory"></ejs-dropdownlist>
+                <small>Επιλέξτε τη γονική κατηγορία αν θέλετε να δημιουργήσετε υποκατηγορία.</small>
+              </label>
+
+              <div class="status-field">
+                <span class="field-label">Κατάσταση</span>
+                <label class="status-toggle">
+                  <ejs-switch [(ngModel)]="isActive" name="isActive"></ejs-switch>
+                  <span>Ενεργή</span>
+                </label>
+                <small>Οι ενεργές κατηγορίες εμφανίζονται στο site.</small>
+              </div>
+            </div>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <h2>SEO</h2>
+          <div class="form-grid seo-grid">
+            <label class="field">
+              <span class="field-label">SEO Title</span>
+              <ejs-textbox [(ngModel)]="seoTitle" name="seoTitle"></ejs-textbox>
+            </label>
+            <label class="field">
+              <span class="field-label">Meta Description</span>
+              <ejs-textarea [(ngModel)]="metaDescription" name="metaDescription" rows="3"></ejs-textarea>
+              <small>Μέγιστο 160 χαρακτήρες.</small>
+            </label>
+          </div>
+        </section>
+
+        <section class="panel-card">
+          <h2>Περιγραφή Κατηγορίας</h2>
+          <label class="field">
+            <span class="field-label">Περιγραφή</span>
+            <div class="editor-shell">
+              <div class="editor-toolbar">
+                <button type="button">Παράγραφος <span class="e-icons e-chevron-down"></span></button>
+                <button type="button"><b>B</b></button>
+                <button type="button"><i>I</i></button>
+                <button type="button"><u>U</u></button>
+                <button type="button"><span class="e-icons e-list-unordered"></span></button>
+                <button type="button"><span class="e-icons e-align-left"></span></button>
+                <button type="button"><span class="e-icons e-link"></span></button>
+                <button type="button"><span class="e-icons e-image"></span></button>
+                <button type="button"><span class="e-icons e-code-view"></span></button>
+                <button type="button"><span class="e-icons e-bookmark"></span></button>
+                <button type="button"><span class="e-icons e-undo"></span></button>
+                <button type="button" disabled><span class="e-icons e-redo"></span></button>
+              </div>
+              <textarea [(ngModel)]="description" name="description"></textarea>
+              <span class="word-count">155 λέξεις</span>
+            </div>
+          </label>
+        </section>
+      </div>
+
+      <aside class="side-column">
+        <section class="panel-card stat-card">
+          <h2>Στατιστικά Κατηγορίας</h2>
+          <div class="stat-row">
+            <span class="stat-icon purple"><span class="e-icons e-file-document"></span></span>
+            <span><strong>54</strong><small>Σύνολο Άρθρων</small></span>
+            <button type="button"><span class="e-icons e-chevron-right"></span></button>
+          </div>
+          <div class="stat-row">
+            <span class="stat-icon green"><span class="e-icons e-order"></span></span>
+            <span><strong>128</strong><small>Σύνολο Προϊόντων</small></span>
+            <button type="button"><span class="e-icons e-chevron-right"></span></button>
+          </div>
+          <div class="stat-row">
+            <span class="stat-icon yellow"><span class="e-icons e-link"></span></span>
+            <span><strong>236</strong><small>Σύνολο Affiliate Links</small></span>
+            <button type="button"><span class="e-icons e-chevron-right"></span></button>
+          </div>
+          <div class="stat-row">
+            <span class="stat-icon blue"><span class="e-icons e-eye"></span></span>
+            <span><strong>15,842</strong><small>Συνολικές Προβολές (30 ημ.)</small></span>
+            <button type="button"><span class="e-icons e-chevron-right"></span></button>
+          </div>
+        </section>
+
+        <section class="panel-card dates-card">
+          <h2>Ημερομηνίες</h2>
+          <dl>
+            <dt>Ημερομηνία Δημιουργίας</dt><dd>12/03/2024 14:25</dd>
+            <dt>Δημιουργήθηκε από</dt><dd>Admin</dd>
+            <dt>Τελευταία Ενημέρωση</dt><dd>15/05/2024 10:30</dd>
+            <dt>Τελευταία ενημέρωση από</dt><dd>Admin</dd>
+          </dl>
+        </section>
+      </aside>
+    </section>
+
+    <footer class="bottom-actions">
+      <button ejs-button type="button" cssClass="e-outline delete-button"><span class="e-icons e-trash"></span>Διαγραφή Κατηγορίας</button>
+      <div>
+        <button ejs-button type="button" cssClass="e-outline cancel-button">Ακύρωση</button>
+        <button ejs-button type="button" cssClass="e-primary save-button"><span class="e-icons e-save"></span>Αποθήκευση Αλλαγών</button>
+      </div>
+    </footer>
+  </main>
+</section>

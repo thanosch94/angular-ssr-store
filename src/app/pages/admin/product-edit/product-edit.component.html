@@ -1,0 +1,222 @@
+<div class="product-edit-shell">
+  <header class="editor-header">
+    <div class="title-block">
+      <button class="icon-button" type="button" aria-label="Menu">
+        <span class="e-icons e-menu"></span>
+      </button>
+      <div>
+        <h1>Επεξεργασία Προϊόντος</h1>
+        <nav aria-label="Breadcrumb">
+          <a routerLink="/admin">Dashboard</a>
+          <span>›</span>
+          <span>Προϊόντα</span>
+          <span>›</span>
+          <strong>Επεξεργασία</strong>
+        </nav>
+      </div>
+    </div>
+
+    <div class="header-actions">
+      <button class="ghost-button" type="button" (click)="onCancel()">Ακύρωση</button>
+      <button class="ghost-button preview-button" type="button">Προεπισκόπηση <span class="e-icons e-open-link" aria-hidden="true"></span></button>
+      <button class="danger-button" type="button">Διαγραφή <span class="e-icons e-trash" aria-hidden="true"></span></button>
+      <div class="notification" aria-label="Notifications">
+        <span class="e-icons e-notes notification-icon"></span>
+        <b>3</b>
+      </div>
+      <div class="admin-profile">
+        <div class="avatar"></div>
+        <div>
+          <strong>Admin</strong>
+          <small>Διαχειριστής</small>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <main class="editor-main">
+    <div *ngIf="isLoading" class="loading">Φόρτωση προϊόντος...</div>
+
+    <form *ngIf="!isLoading && product" [formGroup]="productForm" (ngSubmit)="onSubmit()" class="product-form">
+      <ejs-tab class="product-tabs" heightAdjustMode="None" overflowMode="Scrollable">
+        <e-tabitems>
+          <e-tabitem [header]="{ text: 'Γενικά Στοιχεία' }"></e-tabitem>
+          <e-tabitem [header]="{ text: 'Affiliate Links' }"></e-tabitem>
+          <e-tabitem [header]="{ text: 'SEO & Schema' }"></e-tabitem>
+          <e-tabitem [header]="{ text: 'Σχετικά Προϊόντα' }"></e-tabitem>
+          <e-tabitem [header]="{ text: 'Ιστορικό Αλλαγών' }"></e-tabitem>
+        </e-tabitems>
+      </ejs-tab>
+
+      <section class="content-grid">
+        <section class="panel basic-panel">
+          <h2>Βασικές Πληροφορίες</h2>
+
+          <div class="field-grid">
+            <label class="field">
+              <span>Τίτλος Προϊόντος <b>*</b></span>
+              <ejs-textbox formControlName="Name" placeholder="Τίτλος προϊόντος"></ejs-textbox>
+              <small *ngIf="productForm.get('Name')?.invalid && productForm.get('Name')?.touched" class="error">
+                Ο τίτλος είναι υποχρεωτικός.
+              </small>
+            </label>
+
+            <label class="field">
+              <span>SKU</span>
+              <ejs-textbox formControlName="Sku" placeholder="SKU"></ejs-textbox>
+              <small *ngIf="productForm.get('Sku')?.invalid && productForm.get('Sku')?.touched" class="error">
+                Το SKU είναι υποχρεωτικό.
+              </small>
+            </label>
+          </div>
+
+          <label class="field">
+            <span>Σύντομη Περιγραφή</span>
+            <ejs-textbox formControlName="AffiliateId" placeholder="Σύντομη περιγραφή ή affiliate id"></ejs-textbox>
+          </label>
+
+          <label class="field">
+            <span>Περιγραφή</span>
+            <ejs-richtexteditor height="250px" id="description" [toolbarSettings]="tools" formControlName="Description" maxLength="1000" placeholder="Περιγραφή προϊόντος"></ejs-richtexteditor>
+          </label>
+
+          <div class="features-block" formArrayName="Images">
+            <div class="section-title-row">
+              <span>Χαρακτηριστικά</span>
+            </div>
+            <div *ngFor="let image of images.controls; let i = index" class="feature-row">
+              <span class="e-icons e-grip-vertical drag-handle"></span>
+              <ejs-textbox [formControlName]="i" type="url" placeholder="Χαρακτηριστικό ή επιπλέον εικόνα"></ejs-textbox>
+              <button class="square-button" type="button" (click)="removeImage(i)" aria-label="Αφαίρεση">
+                <span class="e-icons e-close"></span>
+              </button>
+            </div>
+            <button class="add-feature-button" type="button" (click)="addImage()"><span class="e-icons e-plus"></span> Προσθήκη Χαρακτηριστικού</button>
+          </div>
+        </section>
+
+        <section class="panel price-panel">
+          <h2>Τιμή &amp; Πληροφορίες</h2>
+          <label class="field currency-field">
+            <span>Τιμή (προτεινόμενη)</span>
+            <ejs-numerictextbox formControlName="Price" [min]="0" [showSpinButton]="false" format="n2" placeholder="0.00" ></ejs-numerictextbox>
+          </label>
+          <label class="field">
+            <span>Νόμισμα</span>
+            <select>
+              <option>EUR - Ευρώ</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Διαθεσιμότητα</span>
+            <select>
+              <option>Διαθέσιμο</option>
+              <option>Περιορισμένο απόθεμα</option>
+              <option>Μη διαθέσιμο</option>
+            </select>
+          </label>
+          <label class="field">
+            <span>Ημερομηνία Κυκλοφορίας</span>
+            <input type="date" value="2023-09-22">
+          </label>
+          <label class="field">
+            <span>Κατασκευαστής / Μάρκα</span>
+            <select>
+              <option>Apple</option>
+              <option>Samsung</option>
+              <option>Xiaomi</option>
+            </select>
+          </label>
+        </section>
+
+        <aside class="right-column">
+          <section class="panel status-panel">
+            <h2>Κατάσταση</h2>
+            <div class="status-row">
+              <span>Κατάσταση</span>
+              <select class="status-select">
+                <option>Δημοσιευμένο</option>
+                <option>Πρόχειρο</option>
+              </select>
+            </div>
+            <div class="status-row">
+              <span>Προβολή στο site</span>
+              <a [href]="productForm.get('AffiliateUrl')?.value || productLink" target="_blank" rel="noreferrer">Προβολή προϊόντος <span class="e-icons e-open-link"></span></a>
+            </div>
+          </section>
+
+          <section class="panel image-panel">
+            <h2>Εικόνα Προϊόντος</h2>
+            <div class="image-preview-frame">
+              <img *ngIf="productForm.get('FeatureImageUrl')?.value" [src]="productForm.get('FeatureImageUrl')?.value" alt="Προεπισκόπηση προϊόντος">
+              <span *ngIf="!productForm.get('FeatureImageUrl')?.value">Δεν υπάρχει εικόνα</span>
+            </div>
+            <label class="field">
+              <span>URL εικόνας</span>
+              <ejs-textbox formControlName="FeatureImageUrl" type="url" placeholder="URL εικόνας προϊόντος"></ejs-textbox>
+              <small *ngIf="productForm.get('FeatureImageUrl')?.invalid && productForm.get('FeatureImageUrl')?.touched" class="error">
+                Η εικόνα είναι υποχρεωτική.
+              </small>
+            </label>
+            <div class="image-actions">
+              <button class="ghost-button small" type="button"><span class="e-icons e-upload-1"></span> Αλλαγή εικόνας</button>
+              <button class="text-danger" type="button"><span class="e-icons e-trash"></span> Αφαίρεση</button>
+            </div>
+          </section>
+
+          <section class="panel stats-panel">
+            <h2>Στατιστικά</h2>
+            <dl>
+              <div><dt>Συνολικά Clicks</dt><dd>1,245</dd></div>
+              <div><dt>Clicks (7 ημέρες)</dt><dd>98</dd></div>
+              <div><dt>Clicks (30 ημέρες)</dt><dd>412</dd></div>
+              <div><dt>Πρώτη Δημοσίευση</dt><dd>22/09/2023</dd></div>
+              <div><dt>Τελευταία Ενημέρωση</dt><dd>18/05/2024</dd></div>
+            </dl>
+          </section>
+
+          <section class="panel link-panel">
+            <h2>Σύνδεσμος Προϊόντος</h2>
+            <small>Μοναδικός σύνδεσμος για χρήση σε άρθρα</small>
+            <div class="copy-field">
+              <input [value]="productLink" readonly>
+              <button type="button" aria-label="Αντιγραφή"><span class="e-icons e-copy"></span></button>
+            </div>
+          </section>
+        </aside>
+
+        <section class="panel category-panel">
+          <h2>Κατηγορίες Προϊόντος</h2>
+          <div class="chips-field">
+            <button *ngFor="let category of selectedCategories" class="chip" type="button" (click)="removeCategory(category.Id.toString())">
+              {{ category.Name }} <span>×</span>
+            </button>
+            <span *ngIf="selectedCategories.length === 0" class="placeholder-chip">Επιλέξτε κατηγορίες</span>
+          </div>
+          <div class="categories-list">
+            <ejs-checkbox *ngFor="let category of categories"
+              [checked]="isCategorySelected(category.Id.toString())"
+              (change)="onCategoryChange(category.Id.toString(), $event.checked)"
+              [label]="category.Name">
+            </ejs-checkbox>
+          </div>
+        </section>
+
+        <details class="panel extra-panel">
+          <summary>Επιπλέον Πληροφορίες</summary>
+          <label class="field">
+            <span>Affiliate URL</span>
+            <ejs-textbox formControlName="AffiliateUrl" type="url" placeholder="Affiliate URL"></ejs-textbox>
+          </label>
+        </details>
+      </section>
+
+      <footer class="sticky-actions">
+        <button class="ghost-button" type="button" (click)="onCancel()">Ακύρωση</button>
+        <button class="primary-button" type="submit" [disabled]="productForm.invalid || isSaving">
+          {{ isSaving ? 'Αποθήκευση...' : 'Αποθήκευση Αλλαγών' }}
+        </button>
+      </footer>
+    </form>
+  </main>
+</div>

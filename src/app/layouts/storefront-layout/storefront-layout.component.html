@@ -1,0 +1,20 @@
+<app-header (toggleSidebar)="onToggleSidebar()"></app-header>
+
+<ejs-sidebar
+  id="default-sidebar"
+  #sidebar
+  [width]="'300px'"
+  style="visibility: hidden"
+  [showBackdrop]="false"
+  [closeOnDocumentClick]="false"
+  [enableGestures]="true"
+  [enablePersistence]="true"
+  (created)="onCreated()">
+  <categories (categorySelected)="onCategorySelection($event)"></categories>
+</ejs-sidebar>
+
+<main class="storefront-content">
+  <router-outlet></router-outlet>
+</main>
+
+<app-cookie-consent></app-cookie-consent>

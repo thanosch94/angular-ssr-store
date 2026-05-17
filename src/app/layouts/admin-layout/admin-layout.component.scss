@@ -1,0 +1,194 @@
+:host {
+  display: block;
+}
+
+.admin-layout {
+  min-height: 100vh;
+  background: #f6f8fb;
+  color: #17233b;
+}
+
+.admin-sidenav {
+  position: fixed;
+  inset: 0 auto 0 0;
+  z-index: 100;
+  width: 260px;
+  display: flex;
+  flex-direction: column;
+  background: linear-gradient(180deg, #071327 0%, #071a34 54%, #061224 100%);
+  border-right: 1px solid rgba(255, 255, 255, 0.08);
+  color: #fff;
+  transition: width 0.2s ease;
+}
+
+.admin-brand {
+  height: 74px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 28px;
+  border-bottom: 1px solid rgba(255, 255, 255, 0.08);
+}
+
+.brand-mark {
+  width: 30px;
+  height: 30px;
+  border: 5px solid #7258ff;
+  border-left-color: transparent;
+  border-radius: 9px;
+}
+
+.brand-text {
+  font-size: 24px;
+  font-weight: 800;
+  letter-spacing: 0;
+}
+
+.admin-nav {
+  flex: 1;
+  padding: 22px 16px;
+  overflow-y: auto;
+  scrollbar-width: none;
+  -ms-overflow-style: none;
+}
+
+.admin-nav::-webkit-scrollbar {
+  display: none;
+}
+
+.nav-section {
+  display: block;
+  margin: 20px 10px 10px;
+  color: #91a0b8;
+  font-size: 12px;
+  font-weight: 800;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+}
+
+.nav-section:first-child {
+  margin-top: 0;
+}
+
+.admin-nav a,
+.collapse-button {
+  min-height: 40px;
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  padding: 0 12px;
+  border-radius: 7px;
+  color: #edf3ff;
+  text-decoration: none;
+  font-weight: 650;
+}
+
+.admin-nav a {
+  margin-bottom: 6px;
+}
+
+.admin-nav a:hover,
+.admin-nav a.active {
+  background: linear-gradient(90deg, #7358ff, #5139e6);
+  box-shadow: 0 8px 20px rgba(84, 60, 230, 0.35);
+}
+
+.nav-icon {
+  width: 18px;
+  height: 18px;
+  flex: 0 0 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  opacity: 0.95;
+}
+
+.collapse-button {
+  margin: 16px;
+  border: 0;
+  border-top: 1px solid rgba(255, 255, 255, 0.08);
+  background: transparent;
+  cursor: pointer;
+}
+
+.collapse-icon {
+  width: 18px;
+  height: 18px;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.admin-content {
+  min-height: 100vh;
+  margin-left: 260px;
+  transition: margin-left 0.2s ease;
+}
+
+.admin-layout--collapsed .admin-sidenav {
+  width: 76px;
+}
+
+.admin-layout--collapsed .admin-content {
+  margin-left: 76px;
+}
+
+.admin-layout--collapsed .brand-text,
+.admin-layout--collapsed .admin-nav a span:last-child,
+.admin-layout--collapsed .nav-section,
+.admin-layout--collapsed .collapse-button span:last-child {
+  display: none;
+}
+
+.admin-layout--collapsed .admin-brand,
+.admin-layout--collapsed .admin-nav a,
+.admin-layout--collapsed .collapse-button {
+  justify-content: center;
+  padding-left: 0;
+  padding-right: 0;
+}
+
+@media (max-width: 900px) {
+  .admin-sidenav {
+    width: 76px;
+  }
+
+  .admin-content {
+    margin-left: 76px;
+  }
+
+  .brand-text,
+  .admin-nav a span:last-child,
+  .nav-section,
+  .collapse-button span:last-child {
+    display: none;
+  }
+}
+
+@media (max-width: 640px) {
+  .admin-sidenav {
+    position: sticky;
+    width: 100%;
+    height: auto;
+    min-height: 66px;
+  }
+
+  .admin-layout,
+  .admin-sidenav,
+  .admin-nav {
+    display: block;
+  }
+
+  .admin-brand {
+    height: 66px;
+  }
+
+  .admin-nav,
+  .collapse-button {
+    display: none;
+  }
+
+  .admin-content {
+    margin-left: 0;
+  }
+}

@@ -1,0 +1,146 @@
+<section class="email-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Ρυθμίσεις Email</h2>
+      <p>Ρυθμίστε τον τρόπο αποστολής email και τα βασικά στοιχεία αποστολέα</p>
+    </div>
+    <button ejs-button cssClass="e-primary save-button" type="button">
+      <span class="e-icons e-save"></span>
+      Αποθήκευση Αλλαγών
+    </button>
+  </header>
+
+  <div class="email-content">
+    <section class="settings-card">
+      <h3>Ρυθμίσεις SMTP</h3>
+      <div class="form-grid three-columns">
+        <label class="field">
+          <span>Μέθοδος Αποστολής</span>
+          <ejs-dropdownlist [dataSource]="sendMethodOptions" [fields]="fields" [(ngModel)]="sendMethod"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span>SMTP Host <b>*</b></span>
+          <ejs-textbox [(ngModel)]="smtpHost"></ejs-textbox>
+        </label>
+        <label class="field">
+          <span>SMTP Port <b>*</b></span>
+          <ejs-numerictextbox [(ngModel)]="smtpPort" [format]="'n0'" [min]="1" [max]="65535" [showSpinButton]="true"></ejs-numerictextbox>
+        </label>
+        <label class="field">
+          <span>Κρυπτογράφηση (Encryption)</span>
+          <ejs-dropdownlist [dataSource]="encryptionOptions" [fields]="fields" [(ngModel)]="encryption"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span>Όνομα Χρήστη (Username) <b>*</b></span>
+          <ejs-textbox [(ngModel)]="username"></ejs-textbox>
+        </label>
+        <label class="field password-field">
+          <span>Κωδικός API / Password <b>*</b></span>
+          <ejs-textbox [(ngModel)]="password"></ejs-textbox>
+          <button type="button" aria-label="Εμφάνιση κωδικού"><span class="e-icons e-eye"></span></button>
+        </label>
+      </div>
+
+      <div class="smtp-status">
+        <span class="e-icons e-check"></span>
+        <div>
+          <strong>Σύνδεση SMTP</strong>
+          <small>Η σύνδεση με τον SMTP server είναι επιτυχής.</small>
+        </div>
+        <button ejs-button type="button" cssClass="e-outline">
+          <span class="e-icons e-check"></span>
+          Έλεγχος Σύνδεσης
+        </button>
+      </div>
+    </section>
+
+    <section class="settings-card">
+      <h3>Αποστολέας (Sender) Στοιχεία</h3>
+      <div class="form-grid three-columns">
+        <label class="field">
+          <span>Όνομα Αποστολέα <b>*</b></span>
+          <ejs-textbox [(ngModel)]="senderName"></ejs-textbox>
+        </label>
+        <label class="field">
+          <span>Email Αποστολέα <b>*</b></span>
+          <ejs-textbox [(ngModel)]="senderEmail"></ejs-textbox>
+        </label>
+        <label class="field">
+          <span>Απάντηση-Προς (Reply-To)</span>
+          <ejs-textbox [(ngModel)]="replyTo"></ejs-textbox>
+        </label>
+      </div>
+      <label class="switch-row">
+        <span>
+          <strong>Χρήση διαφορετικού email για απαντήσεις</strong>
+          <small>Ενεργοποιήστε για να ορίσετε διαφορετικό email απαντήσεων</small>
+        </span>
+        <ejs-switch [(ngModel)]="useDifferentReplyTo"></ejs-switch>
+      </label>
+    </section>
+
+    <div class="lower-grid">
+      <section class="settings-card options-card">
+        <h3>Επιλογές Αποστολής</h3>
+        <label class="option-row">
+          <ejs-switch [(ngModel)]="enableSending"></ejs-switch>
+          <span><strong>Ενεργοποίηση email αποστολών</strong><small>Επιτρέπει την αποστολή email από το σύστημα</small></span>
+        </label>
+        <label class="option-row">
+          <ejs-switch [(ngModel)]="htmlEmail"></ejs-switch>
+          <span><strong>Αποστολή email σε HTML μορφή</strong><small>Τα email θα αποστέλλονται σε HTML format</small></span>
+        </label>
+        <label class="option-row">
+          <ejs-switch [(ngModel)]="saveCopies"></ejs-switch>
+          <span><strong>Αποθήκευση αντιγράφων email</strong><small>Αποθήκευση όλων των αποσταλμένων email στο σύστημα</small></span>
+        </label>
+        <label class="option-row">
+          <ejs-switch [(ngModel)]="logFailures"></ejs-switch>
+          <span><strong>Καταγραφή αποτυχημένων αποστολών</strong><small>Καταγραφή και ειδοποίηση για αποτυχημένες αποστολές</small></span>
+        </label>
+      </section>
+
+      <section class="settings-card test-card">
+        <h3>Δοκιμαστική Αποστολή</h3>
+        <p>Στείλτε ένα δοκιμαστικό email για να ελέγξετε τις ρυθμίσεις.</p>
+        <label class="field">
+          <span>Email Παραλήπτη <b>*</b></span>
+          <ejs-textbox [(ngModel)]="testRecipient" placeholder="π.χ. test@example.com"></ejs-textbox>
+        </label>
+        <button ejs-button type="button" cssClass="e-outline test-button">
+          <span class="e-icons e-send-1"></span>
+          Αποστολή Δοκιμαστικού Email
+        </button>
+      </section>
+
+      <section class="settings-card templates-card">
+        <h3>Πρότυπα Email</h3>
+        <p>Διαχείριση και προεπισκόπηση προτύπων email του συστήματος.</p>
+        <div class="template-list">
+          <article class="template-item">
+            <span class="e-icons e-user"></span>
+            <div><strong>Εγγραφή Χρήστη</strong><small>Email καλωσορίσματος για νέους χρήστες</small></div>
+            <button ejs-button type="button" cssClass="e-outline">Επεξεργασία</button>
+          </article>
+          <article class="template-item">
+            <span class="e-icons e-lock"></span>
+            <div><strong>Επαναφορά Κωδικού</strong><small>Email για επαναφορά κωδικού πρόσβασης</small></div>
+            <button ejs-button type="button" cssClass="e-outline">Επεξεργασία</button>
+          </article>
+          <article class="template-item">
+            <span class="e-icons e-order"></span>
+            <div><strong>Ειδοποίηση Παραγγελίας</strong><small>Ενημέρωση για νέα παραγγελία</small></div>
+            <button ejs-button type="button" cssClass="e-outline">Επεξεργασία</button>
+          </article>
+        </div>
+        <a href="#" class="templates-link">Προβολή όλων των προτύπων <span class="e-icons e-arrow-right"></span></a>
+      </section>
+    </div>
+
+    <aside class="info-note">
+      <span class="e-icons e-circle-info"></span>
+      <strong>Σημείωση:</strong>
+      Για μαζικές αποστολές προτείνουμε τη χρήση υπηρεσιών όπως SendGrid, Mailgun ή Amazon SES για καλύτερη αξιοπιστία.
+    </aside>
+  </div>
+</section>

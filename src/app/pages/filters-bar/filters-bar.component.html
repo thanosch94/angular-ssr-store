@@ -11,27 +11,29 @@
   <!-- Category Dropdown -->
   <ejs-dropdownlist
     [dataSource]="categories"
-    [(ngModel)]="filters.category"
+    [(ngModel)]="filters.Category"
     placeholder="Select Category"
-    (change)="applyFilters()"
+    (ngModelChange)="applyFilters()"
   ></ejs-dropdownlist>
 
   <!-- Price Range -->
   <div class="price-range">
     <ejs-numerictextbox
-      [(ngModel)]="filters.minPrice"
+      [(ngModel)]="filters.MinPrice"
       placeholder="Min"
-      (change)="applyFilters()"
+      (ngModelChange)="applyFilters()"
       [min]="0"
       format="c2"
       currency="EUR"
     ></ejs-numerictextbox>
     <span>-</span>
     <ejs-numerictextbox
-      [(ngModel)]="filters.maxPrice"
+      [(ngModel)]="filters.MaxPrice"
+      (ngModelChange)="applyFilters()"
       placeholder="Max"
-      (change)="applyFilters()"
       format="c2"
+      [min]="filters.MinPrice"
+      currency="EUR"
     ></ejs-numerictextbox>
   </div>
 

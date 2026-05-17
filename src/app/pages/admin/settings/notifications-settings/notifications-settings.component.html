@@ -1,0 +1,137 @@
+<section class="notifications-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Ρυθμίσεις Ειδοποιήσεων</h2>
+      <p>Επιλέξτε πώς και πότε θέλετε να λαμβάνετε ειδοποιήσεις.</p>
+    </div>
+    <button ejs-button cssClass="e-primary save-button" type="button">
+      <span class="e-icons e-save"></span>
+      Αποθήκευση Αλλαγών
+    </button>
+  </header>
+
+  <div class="notifications-content">
+    <div class="top-grid">
+      <section class="settings-card">
+        <h3>Κανάλια Ειδοποιήσεων</h3>
+        <p class="card-helper">Επιλέξτε τα κανάλια μέσω των οποίων θα λαμβάνετε ειδοποιήσεις.</p>
+        <label class="channel-row">
+          <span class="channel-icon e-icons e-send-1"></span>
+          <span><strong>Email</strong><small>Λάβετε ειδοποιήσεις στο email σας</small></span>
+          <ejs-switch [(ngModel)]="emailEnabled"></ejs-switch>
+        </label>
+        <label class="channel-row">
+          <span class="channel-icon e-icons e-clock"></span>
+          <span><strong>Ειδοποιήσεις Browser</strong><small>Εμφάνιση ειδοποιήσεων στο browser</small></span>
+          <ejs-switch [(ngModel)]="browserEnabled"></ejs-switch>
+        </label>
+      </section>
+
+      <section class="settings-card">
+        <h3>Συνοπτική Συχνότητα (Digest)</h3>
+        <p class="card-helper">Επιλέξτε πόσο συχνά θέλετε να λαμβάνετε περιλήψεις.</p>
+        <label class="field">
+          <span class="field-label">Συχνότητα περιλήψεων</span>
+          <ejs-dropdownlist [dataSource]="frequencyOptions" [fields]="fields" [(ngModel)]="digestFrequency"></ejs-dropdownlist>
+        </label>
+        <label class="field">
+          <span class="field-label">Ώρα αποστολής</span>
+          <ejs-dropdownlist [dataSource]="timeOptions" [fields]="fields" [(ngModel)]="digestTime"></ejs-dropdownlist>
+        </label>
+      </section>
+
+      <section class="settings-card">
+        <h3>Ώρες Σιωπής (Quiet Hours)</h3>
+        <p class="card-helper">Δεν θα λαμβάνετε ειδοποιήσεις εντός του επιλεγμένου διαστήματος.</p>
+        <label class="quiet-switch">
+          <strong>Ενεργοποίηση ωρών σιωπής</strong>
+          <ejs-switch [(ngModel)]="quietHours"></ejs-switch>
+        </label>
+        <div class="time-grid">
+          <label class="field">
+            <span class="field-label">Από</span>
+            <ejs-dropdownlist [dataSource]="timeOptions" [fields]="fields" [(ngModel)]="quietFrom"></ejs-dropdownlist>
+          </label>
+          <label class="field">
+            <span class="field-label">Έως</span>
+            <ejs-dropdownlist [dataSource]="timeOptions" [fields]="fields" [(ngModel)]="quietTo"></ejs-dropdownlist>
+          </label>
+        </div>
+        <small class="zone-note">Ισχύει για όλες τις ζώνες ώρας</small>
+      </section>
+    </div>
+
+    <section class="settings-card table-card">
+      <h3>Ειδοποιήσεις Συστήματος</h3>
+      <p class="card-helper">Επιλέξτε για ποια γεγονότα θέλετε να λαμβάνετε ειδοποιήσεις και από ποιο κανάλι.</p>
+      <div class="notifications-table">
+        <div class="table-head">
+          <span>Κατηγορία</span>
+          <span>Email</span>
+          <span>Browser</span>
+          <span>Συνοπτική Περίληψη</span>
+        </div>
+        <div class="table-row" *ngFor="let rule of rules">
+          <div class="rule-name">
+            <span class="rule-icon e-icons" [ngClass]="rule.iconClass"></span>
+            <span><strong>{{ rule.title }}</strong><small>{{ rule.description }}</small></span>
+          </div>
+          <ejs-checkbox [(ngModel)]="rule.email"></ejs-checkbox>
+          <ejs-checkbox [(ngModel)]="rule.browser"></ejs-checkbox>
+          <ejs-checkbox [(ngModel)]="rule.digest"></ejs-checkbox>
+        </div>
+      </div>
+    </section>
+
+    <div class="bottom-grid">
+      <section class="settings-card templates-card">
+        <h3>Πρότυπα Ειδοποιήσεων</h3>
+        <p class="card-helper">Προσαρμόστε τα πρότυπα των email ειδοποιήσεων.</p>
+        <article class="template-row">
+          <span class="e-icons e-file-document"></span>
+          <strong>Πρότυπο Νέου Χρήστη</strong>
+          <button ejs-button type="button" cssClass="e-outline">Επεξεργασία</button>
+        </article>
+        <article class="template-row">
+          <span class="e-icons e-file-document"></span>
+          <strong>Πρότυπο Νέας Παραγγελίας</strong>
+          <button ejs-button type="button" cssClass="e-outline">Επεξεργασία</button>
+        </article>
+        <article class="template-row">
+          <span class="e-icons e-file-document"></span>
+          <strong>Πρότυπο Πληρωμής</strong>
+          <button ejs-button type="button" cssClass="e-outline">Επεξεργασία</button>
+        </article>
+        <article class="template-row">
+          <span class="e-icons e-file-document"></span>
+          <strong>Πρότυπο Υψηλής Προμήθειας</strong>
+          <button ejs-button type="button" cssClass="e-outline">Επεξεργασία</button>
+        </article>
+      </section>
+
+      <section class="settings-card test-card">
+        <h3>Δοκιμαστική Ειδοποίηση</h3>
+        <p class="card-helper">Στείλτε μια δοκιμαστική ειδοποίηση για να ελέγξετε τις ρυθμίσεις σας.</p>
+        <div class="test-row">
+          <label class="field">
+            <span class="field-label">Αποστολή δοκιμαστικού email στο</span>
+            <ejs-textbox [(ngModel)]="testEmail"></ejs-textbox>
+          </label>
+          <button ejs-button type="button" cssClass="e-outline send-test">
+            <span class="e-icons e-send-1"></span>
+            Αποστολή Δοκιμής
+          </button>
+        </div>
+        <aside class="success-note">
+          <span class="e-icons e-check"></span>
+          <span><strong>Η δοκιμαστική ειδοποίηση εστάλη επιτυχώς!</strong><small>Ελέγξτε τα εισερχόμενά σας.</small></span>
+        </aside>
+      </section>
+    </div>
+
+    <aside class="info-note">
+      <span class="e-icons e-circle-info"></span>
+      Σημείωση: Οι ειδοποιήσεις αποστέλλονται με βάση τις ρυθμίσεις συστήματος και τις προτιμήσεις σας.
+    </aside>
+  </div>
+</section>

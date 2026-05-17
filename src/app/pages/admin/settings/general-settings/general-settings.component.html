@@ -1,0 +1,98 @@
+<section class="settings-form">
+  <header class="settings-form-header">
+    <div>
+      <h2>Γενικές Ρυθμίσεις</h2>
+      <p>Βασικές ρυθμίσεις του συστήματος και του ιστοτόπου</p>
+    </div>
+    <button ejs-button cssClass="e-primary save-button" type="button">
+      <span class="e-icons e-save"></span>
+      Αποθήκευση Αλλαγών
+    </button>
+  </header>
+
+  <section class="settings-section">
+    <h3>Στοιχεία Ιστοτόπου</h3>
+    <div class="form-grid two-columns">
+      <label class="field">
+        <span>Όνομα Ιστοτόπου <b>*</b></span>
+        <ejs-textbox [(ngModel)]="websiteName"></ejs-textbox>
+      </label>
+      <label class="field">
+        <span>Υπότιτλος Ιστοτόπου</span>
+        <ejs-textbox [(ngModel)]="websiteSubtitle"></ejs-textbox>
+      </label>
+      <label class="field">
+        <span>URL Ιστοτόπου <b>*</b></span>
+        <ejs-textbox [(ngModel)]="websiteUrl"></ejs-textbox>
+      </label>
+      <label class="field">
+        <span>Email Επικοινωνίας <b>*</b></span>
+        <ejs-textbox [(ngModel)]="contactEmail"></ejs-textbox>
+      </label>
+    </div>
+  </section>
+
+  <section class="settings-section compact-section">
+    <h3>Ρυθμίσεις Γλώσσας &amp; Ζώνης Ώρας</h3>
+    <div class="form-grid two-columns">
+      <label class="field">
+        <span>Γλώσσα Διαχείρισης</span>
+        <ejs-dropdownlist [dataSource]="languageOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="language"></ejs-dropdownlist>
+      </label>
+      <label class="field">
+        <span>Ζώνη Ώρας</span>
+        <ejs-dropdownlist [dataSource]="timezoneOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="timezone"></ejs-dropdownlist>
+      </label>
+    </div>
+  </section>
+
+  <section class="settings-section date-section">
+    <h3>Ρυθμίσεις Ημερομηνίας &amp; Ώρας</h3>
+    <div class="form-grid four-columns">
+      <label class="field">
+        <span>Μορφή Ημερομηνίας</span>
+        <ejs-dropdownlist [dataSource]="dateFormatOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="dateFormat"></ejs-dropdownlist>
+      </label>
+      <label class="field">
+        <span>Μορφή Ώρας</span>
+        <ejs-dropdownlist [dataSource]="timeFormatOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="timeFormat"></ejs-dropdownlist>
+      </label>
+      <label class="field">
+        <span>Προεπιλεγμένο Εύρος Analytics</span>
+        <ejs-dropdownlist cssClass="accent-dropdown" [dataSource]="analyticsRangeOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="analyticsRange"></ejs-dropdownlist>
+      </label>
+      <label class="field">
+        <span>Σύγκριση με</span>
+        <ejs-dropdownlist [dataSource]="compareRangeOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="compareRange"></ejs-dropdownlist>
+      </label>
+    </div>
+    <p class="helper-text">Το προεπιλεγμένο εύρος χρησιμοποιείται σε σελίδες Analytics, Dashboard και Reports όταν δεν έχει επιλεγεί διαφορετικό εύρος.</p>
+  </section>
+
+  <section class="settings-section toggle-section">
+    <h3>Άλλες Ρυθμίσεις</h3>
+    <div class="toggle-grid">
+      <label class="toggle-item">
+        <ejs-switch [(ngModel)]="maintenanceMode"></ejs-switch>
+        <span>
+          <strong>Λειτουργία Συντήρησης</strong>
+          <small>Ενεργοποιήστε τη λειτουργία συντήρησης του ιστότοπου</small>
+        </span>
+      </label>
+      <label class="toggle-item">
+        <ejs-switch [(ngModel)]="userRegistration"></ejs-switch>
+        <span>
+          <strong>Εγγραφή Χρηστών</strong>
+          <small>Επιτρέπονται νέες εγγραφές χρηστών</small>
+        </span>
+      </label>
+      <label class="toggle-item">
+        <ejs-switch [(ngModel)]="commentsEnabled"></ejs-switch>
+        <span>
+          <strong>Σχόλια</strong>
+          <small>Επιτρέπονται σχόλια στα άρθρα</small>
+        </span>
+      </label>
+    </div>
+  </section>
+</section>

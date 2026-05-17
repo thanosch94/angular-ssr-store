@@ -1,0 +1,55 @@
+<section class="logs-page">
+  <header class="page-header">
+    <div><h1>Logs</h1><p>Καταγραφή ενεργειών και συμβάντων του συστήματος</p></div>
+    <div class="header-actions">
+      <button class="date-range" type="button">10/05/2024 - 15/05/2024 <span class="e-icons e-date-time"></span></button>
+      <button class="square-action" type="button" aria-label="Ανανέωση"><span class="e-icons e-refresh"></span></button>
+      <div class="notification"><span class="e-icons e-clock"></span><b>3</b></div>
+      <div class="admin-profile"><div class="avatar-small"></div><span><strong>Admin</strong><small>Διαχειριστής</small></span><span class="e-icons e-chevron-down"></span></div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="filters-card">
+      <ejs-textbox placeholder="Αναζήτηση σε logs..." [ngModel]="searchTerm" (ngModelChange)="searchTerm = $event; refreshFilteredLogs()"></ejs-textbox>
+      <ejs-dropdownlist [dataSource]="typeOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="type" (ngModelChange)="type = $event; refreshFilteredLogs()"></ejs-dropdownlist>
+      <ejs-dropdownlist [dataSource]="userOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="user" (ngModelChange)="user = $event; refreshFilteredLogs()"></ejs-dropdownlist>
+      <ejs-dropdownlist [dataSource]="entityOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="entity" (ngModelChange)="entity = $event; refreshFilteredLogs()"></ejs-dropdownlist>
+      <ejs-dropdownlist [dataSource]="resultOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="result" (ngModelChange)="result = $event; refreshFilteredLogs()"></ejs-dropdownlist>
+      <button ejs-button type="button" cssClass="e-outline more-filters"><span class="e-icons e-filter-main"></span>Περισσότερα φίλτρα</button>
+      <button ejs-button type="button" cssClass="e-outline export-button"><span class="e-icons e-download"></span>Εξαγωγή</button>
+    </section>
+
+    <section class="table-card">
+      <div class="table-header">
+        <div><h2>Logs (1,248)</h2><p>Εμφανίζονται 1 έως 20 από 1,248 logs</p></div>
+        <div class="table-tools"><label class="auto-refresh"><ejs-switch [(ngModel)]="autoRefresh"></ejs-switch><span>Αυτόματη ανανέωση</span></label><button type="button" aria-label="Ανανέωση"><span class="e-icons e-refresh"></span></button><button type="button" aria-label="Ρυθμίσεις"><span class="e-icons e-settings"></span><span class="e-icons e-chevron-down"></span></button></div>
+      </div>
+
+      <div class="table-wrap">
+        <ejs-grid [dataSource]="filteredLogs" gridLines="Horizontal" [allowSorting]="false" [allowSelection]="true" [selectionSettings]="gridSelectionSettings" [enableHover]="false">
+          <e-columns>
+            <e-column width="46"><ng-template #template><span class="e-icons e-clock clock-icon"></span></ng-template></e-column>
+            <e-column field="date" headerText="Ημερομηνία" width="180"></e-column>
+            <e-column headerText="Χρήστης" width="210">
+              <ng-template #template let-log><div class="user-cell"><span class="avatar" [ngClass]="log.avatarTone">{{ log.avatar }}</span><span><strong>{{ log.user }}</strong><small>{{ log.email }}</small></span></div></ng-template>
+            </e-column>
+            <e-column headerText="Ενέργεια" width="190">
+              <ng-template #template let-log><div class="action-cell"><span class="action-icon" [ngClass]="log.iconTone"><span class="e-icons" [ngClass]="log.icon"></span></span><span><strong [class.danger-text]="log.result === 'failed'">{{ log.action }}</strong><small>{{ log.actionType }}</small></span></div></ng-template>
+            </e-column>
+            <e-column field="entity" headerText="Οντότητα" width="210"></e-column>
+            <e-column field="details" headerText="Λεπτομέρειες" width="300"></e-column>
+            <e-column field="ip" headerText="IP Διεύθυνση" width="150"></e-column>
+            <e-column headerText="Αποτέλεσμα" width="130"><ng-template #template let-log><span class="result-pill" [class.failed]="log.result === 'failed'"><i></i>{{ getResultLabel(log.result) }}</span></ng-template></e-column>
+            <e-column width="60"><ng-template #template><button class="row-menu" type="button" aria-label="Περισσότερα"><span class="e-icons e-more-vertical-1"></span></button></ng-template></e-column>
+          </e-columns>
+        </ejs-grid>
+      </div>
+
+      <footer class="table-footer">
+        <div class="page-size-control"><span>Εμφάνιση</span><ejs-dropdownlist class="page-size" [dataSource]="pageSizeOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="pageSize"></ejs-dropdownlist><span>ανά σελίδα</span></div>
+        <div class="pagination"><button type="button"><span class="e-icons e-chevron-left"></span></button><button type="button" class="active">1</button><button type="button">2</button><button type="button">3</button><span>...</span><button type="button">63</button><button type="button"><span class="e-icons e-chevron-right"></span></button></div>
+      </footer>
+    </section>
+  </main>
+</section>

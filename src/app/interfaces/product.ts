@@ -9,7 +9,7 @@ export interface Product {
   DiscountPrice?: number;
   FeatureImageUrl: string;
   Images: string[];
-  CategoryId?: Guid;
+  CategoryIds?: Guid[];
   IsFavorite?: boolean;
   AffiliateUrl?: string;
 }

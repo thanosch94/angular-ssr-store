@@ -1,34 +1,92 @@
-<ejs-grid
-  [dataSource]="products | async"
-  [allowPaging]="true"
-  [allowSorting]="true"
-  [allowFiltering]="true"
-  [allowGrouping]="true"
-  [pageSettings]="pageSettings"
-  (commandClick)="onCommandClick($event)"
->
-  <e-columns>
-    @for(col of columns;track col.Field){
-    <e-column
-      [field]="col.Field"
-      [headerText]="col.HeaderText"
-      [width]="col.Width"
-      [commands]="col.Commands"
-    >
-      <ng-template #template let-data>
-        @if(col.Field==='FeatureImageUrl'){
-        <img
-          [src]="data.FeatureImageUrl"
-          style="
-            height: 60px;
-            width: 60px;
-            object-fit: cover;
-            border-radius: 8px;
-          "
-        />
-        }@else{ {{ data[col.Field] }}}
-      </ng-template>
-    </e-column>
-    }
-  </e-columns>
-</ejs-grid>
+<section class="products-admin-page">
+  <header class="page-header">
+    <div>
+      <h1>Προϊόντα</h1>
+      <nav aria-label="Breadcrumb">
+        <a routerLink="/admin">Dashboard</a>
+        <span>›</span>
+        <strong>Προϊόντα</strong>
+      </nav>
+    </div>
+
+    <div class="top-actions">
+      <button class="icon-only" type="button" aria-label="Αναζήτηση"><span class="e-icons e-search"></span></button>
+      <div class="notification" aria-label="Ειδοποιήσεις"><span class="e-icons e-clock notification-icon"></span><b>3</b></div>
+      <div class="admin-profile"><div class="avatar"></div><div><strong>Admin</strong><small>Διαχειριστής</small></div></div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="summary-row" aria-label="Σύνοψη προϊόντων">
+      <article class="summary-card total"><span class="summary-icon"><span class="e-icons e-iconsets"></span></span><div><small>Σύνολο Προϊόντων</small><strong>{{ products.length }}</strong><em>Όλα τα προϊόντα</em></div></article>
+      <article class="summary-card published"><span class="summary-icon"><span class="e-icons e-circle-check"></span></span><div><small>Δημοσιευμένα</small><strong>{{ publishedCount }}</strong><em>{{ products.length ? ((publishedCount / products.length) * 100 | number:'1.1-1') : 0 }}% του συνόλου</em></div></article>
+      <article class="summary-card draft"><span class="summary-icon"><span class="e-icons e-file-new"></span></span><div><small>Προσχέδια</small><strong>{{ draftCount }}</strong><em>{{ products.length ? ((draftCount / products.length) * 100 | number:'1.1-1') : 0 }}% του συνόλου</em></div></article>
+      <article class="summary-card inactive"><span class="summary-icon"><span class="e-icons e-circle-remove"></span></span><div><small>Ανενεργά</small><strong>{{ inactiveCount }}</strong><em>{{ products.length ? ((inactiveCount / products.length) * 100 | number:'1.1-1') : 0 }}% του συνόλου</em></div></article>
+      <div class="list-actions">
+        <button class="ghost-button" type="button"><span class="e-icons e-download"></span> Εξαγωγή</button>
+        <button class="ghost-button" type="button"><span class="e-icons e-upload-1"></span> Εισαγωγή</button>
+        <button class="primary-button" type="button"><span class="e-icons e-plus"></span> Προσθήκη Προϊόντος</button>
+      </div>
+    </section>
+
+    <section class="filters-card">
+      <ejs-textbox cssClass="search-input" placeholder="Αναζήτηση προϊόντων..." [ngModel]="searchTerm" (ngModelChange)="searchTerm = $event; onFilterChange()"></ejs-textbox>
+      <ejs-dropdownlist [dataSource]="categoryOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="selectedCategory" (ngModelChange)="selectedCategory = $event; onFilterChange()"></ejs-dropdownlist>
+      <ejs-dropdownlist [dataSource]="statusOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="selectedStatus" (ngModelChange)="selectedStatus = $event; onFilterChange()"></ejs-dropdownlist>
+      <ejs-dropdownlist [dataSource]="storeOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="selectedStore" (ngModelChange)="selectedStore = $event; onFilterChange()"></ejs-dropdownlist>
+      <button class="ghost-button filter-button" type="button"><span class="e-icons e-filter-main"></span> Φίλτρα</button>
+      <button class="clear-button" type="button" (click)="clearFilters()">Καθαρισμός</button>
+    </section>
+
+    <section class="table-card">
+      <div class="table-wrap">
+        <ejs-grid [dataSource]="pagedProducts" gridLines="Horizontal" [allowSorting]="false" [allowSelection]="true" [selectionSettings]="gridSelectionSettings" [enableHover]="false">
+          <e-columns>
+            <e-column type="checkbox" width="56"></e-column>
+            <e-column headerText="Προϊόν" width="390">
+              <ng-template #template let-product>
+                <div class="product-cell">
+                  <img [src]="product.FeatureImageUrl" [alt]="product.Name">
+                  <div>
+                    <ejs-tooltip *ngIf="product.Name" [content]="product.Name" position="TopCenter"><strong class="product-name">{{ product.Name }}</strong></ejs-tooltip>
+                    <strong *ngIf="!product.Name" class="product-name">-</strong>
+                    <small>SKU: {{ product.Sku }}</small>
+                  </div>
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column field="category" headerText="Κατηγορία" width="170"></e-column>
+            <e-column headerText="Τιμή" width="120"><ng-template #template let-product>{{ product.Price | currency:'EUR':'symbol':'1.2-2' }}</ng-template></e-column>
+            <e-column headerText="Κατάσταση" width="150">
+              <ng-template #template let-product><span class="status-pill" [class]="product.status">{{ product.statusLabel }}</span></ng-template>
+            </e-column>
+            <e-column field="clicks" headerText="Clicks" width="120" format="N0"></e-column>
+            <e-column field="lastUpdated" headerText="Τελ. Ενημέρωση" width="170"></e-column>
+            <e-column headerText="Ενέργειες" width="150">
+              <ng-template #template let-product>
+                <div class="row-actions">
+                  <button type="button" title="Επεξεργασία" (click)="$event.stopPropagation(); editProduct(product)"><span class="e-icons e-edit"></span></button>
+                  <button type="button" title="Προβολή" (click)="$event.stopPropagation(); viewProduct(product)"><span class="e-icons e-eye"></span></button>
+                  <button type="button" title="Περισσότερα"><span class="e-icons e-more-vertical-1"></span></button>
+                </div>
+              </ng-template>
+            </e-column>
+          </e-columns>
+        </ejs-grid>
+        <div *ngIf="pagedProducts.length === 0" class="empty-state">Δεν βρέθηκαν προϊόντα.</div>
+      </div>
+
+      <footer class="table-footer">
+        <span>Εμφανίζονται {{ pagedProducts.length ? ((currentPage - 1) * pageSize) + 1 : 0 }} έως {{ ((currentPage - 1) * pageSize) + pagedProducts.length }} από {{ filteredProducts.length }} προϊόντα</span>
+        <div class="pagination">
+          <button type="button" (click)="goToPage(currentPage - 1)" [disabled]="currentPage === 1"><span class="e-icons e-chevron-left"></span></button>
+          <button *ngFor="let page of visiblePages" type="button" [class.active]="page === currentPage" (click)="goToPage(page)">{{ page }}</button>
+          <span *ngIf="totalPages > 6">...</span>
+          <button *ngIf="totalPages > 5" type="button" [class.active]="totalPages === currentPage" (click)="goToPage(totalPages)">{{ totalPages }}</button>
+          <button type="button" (click)="goToPage(currentPage + 1)" [disabled]="currentPage === totalPages"><span class="e-icons e-chevron-right"></span></button>
+        </div>
+        <ejs-dropdownlist class="page-size" [dataSource]="pageSizeOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="pageSize" (ngModelChange)="pageSize = $event; goToPage(1)"></ejs-dropdownlist>
+      </footer>
+    </section>
+  </main>
+</section>

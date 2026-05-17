@@ -1,0 +1,86 @@
+<section class="stores-page">
+  <header class="page-header">
+    <div>
+      <h1>Καταστήματα</h1>
+      <p>Διαχείριση των καταστημάτων και των affiliate προγραμμάτων</p>
+    </div>
+    <div class="header-actions">
+      <button class="date-range" type="button">10/05/2024 - 15/05/2024 <span class="e-icons e-date-time"></span></button>
+      <button class="square-action" type="button" aria-label="Ανανέωση"><span class="e-icons e-refresh"></span></button>
+      <div class="notification"><span class="e-icons e-clock"></span><b>3</b></div>
+      <div class="admin-profile"><div class="avatar"></div><span><strong>Admin</strong><small>Διαχειριστής</small></span></div>
+    </div>
+  </header>
+
+  <main class="page-content">
+    <section class="filters-card">
+      <ejs-textbox placeholder="Αναζήτηση καταστήματος..." [ngModel]="searchTerm" (ngModelChange)="searchTerm = $event; refreshFilteredStores()"></ejs-textbox>
+      <ejs-dropdownlist [dataSource]="categoryOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="selectedCategory" (ngModelChange)="selectedCategory = $event; refreshFilteredStores()"></ejs-dropdownlist>
+      <ejs-dropdownlist [dataSource]="statusOptions" [fields]="{ text: 'text', value: 'value' }" [ngModel]="selectedStatus" (ngModelChange)="selectedStatus = $event; refreshFilteredStores()"></ejs-dropdownlist>
+      <button ejs-button type="button" cssClass="e-outline reset-button" (click)="resetFilters()"><span class="e-icons e-refresh"></span> Επαναφορά</button>
+      <button ejs-button type="button" cssClass="e-primary add-button"><span class="e-icons e-plus"></span> Προσθήκη Καταστήματος</button>
+    </section>
+
+    <section class="table-card">
+      <div class="table-header">
+        <h2>Καταστήματα ({{ filteredStores.length }})</h2>
+        <button ejs-button type="button" cssClass="e-outline"><span class="e-icons e-download"></span> Εξαγωγή</button>
+      </div>
+
+      <div class="table-wrap">
+        <ejs-grid [dataSource]="filteredStores" gridLines="Horizontal" [allowSorting]="false" [allowSelection]="true" [selectionSettings]="gridSelectionSettings" [enableHover]="false">
+          <e-columns>
+            <e-column field="id" headerText="#" width="70"></e-column>
+            <e-column headerText="Κατάστημα" width="270">
+              <ng-template #template let-store>
+                <div class="store-cell">
+                  <div class="store-logo" [ngClass]="store.logoClass">{{ store.logoText }}</div>
+                  <div><strong>{{ store.name }}</strong><a href="#">{{ store.domain }} <span class="e-icons e-open-link"></span></a></div>
+                </div>
+              </ng-template>
+            </e-column>
+            <e-column field="category" headerText="Κατηγορία" width="170"></e-column>
+            <e-column headerText="Προμήθεια" width="140"><ng-template #template let-store>{{ store.commission }} <span class="e-icons e-circle-info muted-icon"></span></ng-template></e-column>
+            <e-column headerText="Clicks (30 ημ.)" width="150">
+              <ng-template #template let-store>
+                <strong>{{ store.clicks | number }}</strong>
+                <small [class.negative]="store.trend < 0">{{ store.trend > 0 ? '↑' : '↓' }} {{ store.trend < 0 ? -store.trend : store.trend }}%</small>
+              </ng-template>
+            </e-column>
+            <e-column headerText="Κατάσταση" width="130"><ng-template #template let-store><span class="status-pill" [class.inactive]="store.status === 'inactive'"><i></i>{{ getStatusLabel(store.status) }}</span></ng-template></e-column>
+            <e-column field="updated" headerText="Τελευταία Ενημέρωση" width="180"></e-column>
+            <e-column headerText="Ενέργειες" width="150">
+              <ng-template #template let-store>
+                <div class="row-actions">
+                  <button type="button" aria-label="Επεξεργασία" (click)="$event.stopPropagation(); editStore(store)"><span class="e-icons e-edit"></span></button>
+                  <button type="button" aria-label="Προβολή"><span class="e-icons e-eye"></span></button>
+                  <button type="button" class="more-button" [class.active]="openMenuId === store.id" (click)="$event.stopPropagation(); toggleMenu(store.id, $event)" aria-label="Περισσότερα"><span class="e-icons e-more-vertical-1"></span></button>
+                </div>
+              </ng-template>
+            </e-column>
+          </e-columns>
+        </ejs-grid>
+      </div>
+
+      <footer class="table-footer">
+        <span>Εμφανίζονται 1 έως {{ filteredStores.length }} από {{ stores.length }} καταστήματα</span>
+        <div class="pagination">
+          <ejs-dropdownlist class="page-size" [dataSource]="pageSizeOptions" [fields]="{ text: 'text', value: 'value' }" [(ngModel)]="pageSize"></ejs-dropdownlist>
+          <button type="button" disabled><span class="e-icons e-arrow-left"></span></button>
+          <button type="button" class="active">1</button>
+          <button type="button"><span class="e-icons e-arrow-right"></span></button>
+        </div>
+      </footer>
+    </section>
+  </main>
+
+  <div class="more-menu" *ngIf="openMenuId" [style.top.px]="menuTop" [style.left.px]="menuLeft">
+    <button type="button"><span class="e-icons e-link"></span>Προβολή συνδέσμων (Affiliate Links)</button>
+    <button type="button"><span class="e-icons e-order"></span>Προβολή προϊόντων</button>
+    <button type="button"><span class="e-icons e-chart"></span>Προβολή analytics</button>
+    <button type="button"><span class="e-icons e-download"></span>Εξαγωγή δεδομένων</button>
+    <hr>
+    <button type="button" class="danger"><span class="e-icons e-warning"></span>Απενεργοποίηση καταστήματος</button>
+    <button type="button" class="danger"><span class="e-icons e-trash"></span>Διαγραφή καταστήματος</button>
+  </div>
+</section>

@@ -1,0 +1,67 @@
+<section class="home">
+  <div class="hero">
+    <div class="hero-copy">
+      <h1>Όμορφα προϊόντα για κάθε χώρο του σπιτιού</h1>
+      <p>Ανακάλυψε έπιπλα, φωτιστικά και διακόσμηση από επιλεγμένα καταστήματα, εύκολα και έξυπνα.</p>
+      <a routerLink="/products-list" class="primary-link">Ανακάλυψε τώρα</a>
+    </div>
+    <img src="https://images.unsplash.com/photo-1618221195710-dd6b41faaea6?auto=format&fit=crop&w=1400&q=85" alt="Modern living room furniture">
+  </div>
+
+  <div class="shop-strip">
+    <strong>Προϊόντα από πολλά καταστήματα</strong>
+    <span *ngFor="let shop of shops">{{ shop }}</span>
+  </div>
+
+  <div class="section-title">
+    <h2>Ανακάλυψε ανά κατηγορία</h2>
+    <a routerLink="/products-list">Όλες οι κατηγορίες</a>
+  </div>
+  <div class="category-grid">
+    <a routerLink="/products-list" class="image-tile" *ngFor="let category of categories">
+      <span>{{ category.title }}</span>
+      <img [src]="category.image" [alt]="category.title">
+    </a>
+  </div>
+
+  <div class="split-area">
+    <section>
+      <div class="section-title">
+        <h2>Επιλεγμένα για σένα</h2>
+        <a routerLink="/products-list">Περισσότερα</a>
+      </div>
+      <div class="product-grid">
+        <article class="product-card" *ngFor="let product of products">
+          <img [src]="product.image" [alt]="product.title">
+          <h3>{{ product.title }}</h3>
+          <p>{{ product.store }} · ★ {{ product.rating }}</p>
+          <strong>{{ product.price | currency:'EUR':'symbol':'1.2-2' }}</strong>
+        </article>
+      </div>
+    </section>
+
+    <aside class="compare-panel">
+      <span class="badge">Έως 20% οικονομία</span>
+      <h2>Βρες το ιδανικό προϊόν στην καλύτερη τιμή</h2>
+      <p>Σύγκρινε τιμές από 5 καταστήματα σε δευτερόλεπτα.</p>
+      <div class="price-row" *ngFor="let shop of shops">
+        <span>{{ shop }}</span>
+        <strong>{{ 749 + shops.indexOf(shop) * 18 | currency:'EUR':'symbol':'1.2-2' }}</strong>
+      </div>
+      <a routerLink="/products-list" class="secondary-link">Σύγκρινε τιμές</a>
+    </aside>
+  </div>
+
+  <div class="section-title">
+    <h2>Inspiration για κάθε χώρο</h2>
+  </div>
+  <div class="inspiration-grid">
+    <a routerLink="/products-list" class="image-tile wide" *ngFor="let item of inspirations">
+      <span>
+        <b>{{ item.title }}</b>
+        <small>{{ item.subtitle }}</small>
+      </span>
+      <img [src]="item.image" [alt]="item.title">
+    </a>
+  </div>
+</section>
