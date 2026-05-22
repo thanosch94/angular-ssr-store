@@ -55,7 +55,7 @@ jobs:
           Write-Host "Environment file copied to $target"
 
       - name: Build Angular SSR
-        run: npm run build -- --configuration production
+        run: npm run build -- --configuration production --base-href /AllForHome/
 
       - name: Verify build output
         shell: powershell

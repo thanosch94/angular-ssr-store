@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { faSearch, faHeart, faBars, faHouse, faUser, faShoppingCart } from '@fortawesome/free-solid-svg-icons';
+import { faSearch, faHeart, faHouse, faUser } from '@fortawesome/free-solid-svg-icons';
 import { FontAwesomeModule } from '@fortawesome/angular-fontawesome';
 import { Router, RouterLink } from '@angular/router';
 import { SidebarModule } from '@syncfusion/ej2-angular-navigations';
@@ -17,10 +17,8 @@ export class HeaderComponent implements OnInit {
   searchInput?: string;
   faSearch: any;
   faHeart: any;
-  faBars: any;
   faHouse: any;
   faUser: any;
-  faShoppingCart: any;
   isSidebarOpen = false;
   @Output() toggleSidebar = new EventEmitter<void>();
 
@@ -29,10 +27,8 @@ export class HeaderComponent implements OnInit {
   ngOnInit() {
     this.faSearch = faSearch;
     this.faHeart = faHeart;
-    this.faBars = faBars;
     this.faHouse = faHouse;
     this.faUser = faUser;
-    this.faShoppingCart = faShoppingCart;
 
   }
 
