@@ -11,7 +11,7 @@ jobs:
 
     env:
       APP_NAME: "angular-ssr-store"
-      DEPLOY_PATH: "C:\\inetpub\\wwwroot\\AllForHome"
+      DEPLOY_PATH: "C:\\apps\\AllForHome"
       PM2_APP_NAME: "all-for-home-ssr"
       PM2_PATH: "C:\\Users\\Administrator\\AppData\\Roaming\\npm\\pm2.cmd"
       PORT: "4000"
@@ -109,7 +109,7 @@ jobs:
             apps: [
               {
                 name: "all-for-home-ssr",
-                cwd: "C:\\inetpub\\wwwroot\\AllForHome",
+                cwd: "C:\\apps\\AllForHome",
                 script: ".\\server\\server.mjs",
                 env: {
                   NODE_ENV: "production",
