@@ -109,6 +109,7 @@ jobs:
             apps: [
               {
                 name: "all-for-home-ssr",
+                cwd: "C:\\inetpub\\wwwroot\\AllForHome",
                 script: ".\\server\\server.mjs",
                 env: {
                   NODE_ENV: "production",
