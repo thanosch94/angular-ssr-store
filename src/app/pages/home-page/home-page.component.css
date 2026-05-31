@@ -1,6 +1,4 @@
 .home {
-  max-width: var(--page-max);
-  margin: 0 auto;
   padding: var(--gap-lg);
 }
 
